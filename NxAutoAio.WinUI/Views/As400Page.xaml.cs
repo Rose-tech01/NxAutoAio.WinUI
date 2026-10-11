@@ -30,6 +30,38 @@ public sealed partial class As400Page : Page
         InitializeComponent();
         MawbList.ItemsSource = _mawbs;
         UpdateMawbState();
+        Loaded += (_, _) => UpdateLayout(PageRoot.ActualWidth);
+    }
+
+    private void PageRoot_SizeChanged(object sender, SizeChangedEventArgs e) =>
+        UpdateLayout(e.NewSize.Width);
+
+    private void UpdateLayout(double width)
+    {
+        var narrow = width < 820;
+        DataGrid.ColumnDefinitions.Clear();
+        DataGrid.RowDefinitions.Clear();
+
+        if (narrow)
+        {
+            DataGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            DataGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+            DataGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+            Grid.SetColumn(MawbCard, 0);
+            Grid.SetRow(MawbCard, 0);
+            Grid.SetColumn(HawbCard, 0);
+            Grid.SetRow(HawbCard, 1);
+        }
+        else
+        {
+            DataGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            DataGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            DataGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+            Grid.SetColumn(MawbCard, 0);
+            Grid.SetRow(MawbCard, 0);
+            Grid.SetColumn(HawbCard, 1);
+            Grid.SetRow(HawbCard, 0);
+        }
     }
 
     private void MawbSearchBox_TextChanged(object sender, TextChangedEventArgs e)

@@ -2,7 +2,7 @@
     x:Class="NxAutoAio.WinUI.Views.TcsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Grid Padding="32">
+    <Grid x:Name="PageRoot" Padding="32" SizeChanged="PageRoot_SizeChanged">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -13,13 +13,18 @@
             <TextBlock Text="Dịch vụ TCS" Style="{StaticResource PageTitleStyle}" />
             <TextBlock Text="Tra cứu và quản lý dữ liệu tờ cần" Opacity="0.68" />
         </StackPanel>
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,24,0,12" Spacing="8">
-            <Button Content="Nạp File List" Style="{StaticResource ToolbarButtonStyle}" Click="Load_Click" />
-            <Button Content="Tra Thông Quan" Style="{StaticResource ToolbarButtonStyle}" Click="Action_Click" />
-            <Button Content="Tra Phí Lao Vụ" Style="{StaticResource ToolbarButtonStyle}" Click="Action_Click" />
-            <Button Content="In Tờ Cần" Style="{StaticResource ToolbarButtonStyle}" Click="Action_Click" />
+        <Grid x:Name="ToolbarGrid" Grid.Row="1" Margin="0,24,0,12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" /><ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" /><ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button x:Name="LoadButton" Content="Nạp File List" Style="{StaticResource ToolbarButtonStyle}" Click="Load_Click" />
+            <Button x:Name="ClearanceButton" Grid.Column="1" Content="Tra Thông Quan" Style="{StaticResource ToolbarButtonStyle}" Click="Action_Click" />
+            <Button x:Name="FeeButton" Grid.Column="2" Content="Tra Phí Lao Vụ" Style="{StaticResource ToolbarButtonStyle}" Click="Action_Click" />
+            <Button x:Name="PrintButton" Grid.Column="3" Content="In Tờ Cần" Style="{StaticResource ToolbarButtonStyle}" Click="Action_Click" />
             <TextBlock x:Name="FileStatus" Text="Dữ liệu mẫu" VerticalAlignment="Center" Opacity="0.7" />
-        </StackPanel>
+        </Grid>
         <Grid Grid.Row="2" Margin="0,0,0,12" ColumnSpacing="12">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -35,7 +40,8 @@
             </ComboBox>
             <TextBlock x:Name="SelectionStatus" Grid.Column="2" VerticalAlignment="Center" Opacity="0.7" />
         </Grid>
-        <Border Grid.Row="3" Style="{StaticResource CardStyle}" Padding="0">
+        <ScrollViewer Grid.Row="3" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+        <Border MinWidth="860" Style="{StaticResource CardStyle}" Padding="0">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -75,5 +81,6 @@
                 </ListView>
             </Grid>
         </Border>
+        </ScrollViewer>
     </Grid>
 </Page>

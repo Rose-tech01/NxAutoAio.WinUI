@@ -23,6 +23,55 @@ public sealed partial class TcsPage : Page
     {
         InitializeComponent();
         LoadRows();
+        Loaded += (_, _) => UpdateLayout(PageRoot.ActualWidth);
+    }
+
+    private void PageRoot_SizeChanged(object sender, SizeChangedEventArgs e) =>
+        UpdateLayout(e.NewSize.Width);
+
+    private void UpdateLayout(double width)
+    {
+        var narrow = width < 760;
+        ToolbarGrid.RowDefinitions.Clear();
+        ToolbarGrid.ColumnDefinitions.Clear();
+
+        if (narrow)
+        {
+            for (var i = 0; i < 3; i++)
+                ToolbarGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            ToolbarGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            ToolbarGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+
+            PlaceButton(LoadButton, 0, 0);
+            PlaceButton(ClearanceButton, 0, 1);
+            PlaceButton(FeeButton, 1, 0);
+            PlaceButton(PrintButton, 1, 1);
+            Grid.SetRow(FileStatus, 2);
+            Grid.SetColumn(FileStatus, 0);
+            Grid.SetColumnSpan(FileStatus, 2);
+        }
+        else
+        {
+            ToolbarGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            for (var i = 0; i < 5; i++)
+                ToolbarGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = i == 4 ? new GridLength(1, GridUnitType.Star) : GridLength.Auto });
+
+            PlaceButton(LoadButton, 0, 0);
+            PlaceButton(ClearanceButton, 0, 1);
+            PlaceButton(FeeButton, 0, 2);
+            PlaceButton(PrintButton, 0, 3);
+            Grid.SetRow(FileStatus, 0);
+            Grid.SetColumn(FileStatus, 4);
+            Grid.SetColumnSpan(FileStatus, 1);
+        }
+    }
+
+    private static void PlaceButton(Button button, int row, int column)
+    {
+        Grid.SetRow(button, row);
+        Grid.SetColumn(button, column);
+        Grid.SetColumnSpan(button, 1);
+        button.HorizontalAlignment = HorizontalAlignment.Stretch;
     }
 
     private void Load_Click(object sender, RoutedEventArgs e)

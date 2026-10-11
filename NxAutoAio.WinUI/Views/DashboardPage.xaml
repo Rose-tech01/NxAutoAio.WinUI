@@ -3,13 +3,13 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel Padding="32">
+        <Grid x:Name="PageRoot" Padding="32" SizeChanged="PageRoot_SizeChanged">
             <TextBlock Text="Dashboard tổng quan" Style="{StaticResource PageTitleStyle}" />
             <TextBlock Text="Theo dõi nhanh tình trạng xử lý hàng hóa và các dịch vụ logistics."
                        Opacity="0.68"
                        Margin="0,0,0,24" />
 
-            <Grid ColumnSpacing="12" RowSpacing="12">
+            <Grid x:Name="DashboardGrid" ColumnSpacing="12" RowSpacing="12">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
@@ -21,7 +21,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <Border Grid.Column="0" Style="{StaticResource CardStyle}" Padding="18">
+                <Border x:Name="StatCard1" Grid.Column="0" Style="{StaticResource CardStyle}" Padding="18">
                     <StackPanel>
                         <FontIcon Glyph="&#xE8B0;" FontSize="20" Foreground="{StaticResource AccentBrush}" />
                         <TextBlock Text="MAWB hôm nay" Margin="0,14,0,2" Opacity="0.72" />
@@ -29,7 +29,7 @@
                         <TextBlock Text="+12% so với hôm qua" FontSize="12" Opacity="0.68" />
                     </StackPanel>
                 </Border>
-                <Border Grid.Column="1" Style="{StaticResource CardStyle}" Padding="18">
+                <Border x:Name="StatCard2" Grid.Column="1" Style="{StaticResource CardStyle}" Padding="18">
                     <StackPanel>
                         <FontIcon Glyph="&#xE8A7;" FontSize="20" Foreground="{StaticResource AccentBrush}" />
                         <TextBlock Text="HAWB hôm nay" Margin="0,14,0,2" Opacity="0.72" />
@@ -37,7 +37,7 @@
                         <TextBlock Text="Trung bình 3.8 HAWB/MAWB" FontSize="12" Opacity="0.68" />
                     </StackPanel>
                 </Border>
-                <Border Grid.Column="2" Style="{StaticResource CardStyle}" Padding="18">
+                <Border x:Name="StatCard3" Grid.Column="2" Style="{StaticResource CardStyle}" Padding="18">
                     <StackPanel>
                         <FontIcon Glyph="&#xE916;" FontSize="20" Foreground="#D99A00" />
                         <TextBlock Text="Đang chờ xử lý" Margin="0,14,0,2" Opacity="0.72" />
@@ -45,7 +45,7 @@
                         <TextBlock Text="Cần được kiểm tra" FontSize="12" Opacity="0.68" />
                     </StackPanel>
                 </Border>
-                <Border Grid.Column="3" Style="{StaticResource CardStyle}" Padding="18">
+                <Border x:Name="StatCard4" Grid.Column="3" Style="{StaticResource CardStyle}" Padding="18">
                     <StackPanel>
                         <FontIcon Glyph="&#xE73E;" FontSize="20" Foreground="#D13438" />
                         <TextBlock Text="Lỗi cần xử lý" Margin="0,14,0,2" Opacity="0.72" />
@@ -54,7 +54,7 @@
                     </StackPanel>
                 </Border>
 
-                <Border Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource CardStyle}">
+                <Border x:Name="ShipmentCard" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource CardStyle}">
                     <StackPanel>
                         <TextBlock Text="Lô hàng cần xử lý" Style="{StaticResource SectionTitleStyle}" />
                         <Grid ColumnSpacing="12" Margin="0,4,0,8">
@@ -100,7 +100,7 @@
                     </StackPanel>
                 </Border>
 
-                <Border Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource CardStyle}">
+                <Border x:Name="ProgressCard" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource CardStyle}">
                     <StackPanel>
                         <TextBlock Text="Tổng quan tiến trình" Style="{StaticResource SectionTitleStyle}" />
                         <TextBlock Text="Đã thông quan" Margin="0,8,0,4" />
@@ -113,6 +113,6 @@
                     </StackPanel>
                 </Border>
             </Grid>
-        </StackPanel>
+        </Grid>
     </ScrollViewer>
 </Page>
