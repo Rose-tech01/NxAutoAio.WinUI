@@ -78,6 +78,8 @@
                     <StackPanel x:Name="ThemeContent"
                                 Orientation="Horizontal"
                                 HorizontalAlignment="Center"
+                                Width="20"
+                                Height="20"
                                 Spacing="12">
                         <FontIcon x:Name="ThemeIcon"
                                   Glyph="&#xE706;"

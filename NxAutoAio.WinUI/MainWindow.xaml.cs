@@ -42,14 +42,13 @@ public sealed partial class MainWindow : Window
         ThemeButton.HorizontalAlignment = compact
             ? HorizontalAlignment.Center
             : HorizontalAlignment.Stretch;
-        ThemeContent.Orientation = compact
-            ? Orientation.Vertical
-            : Orientation.Horizontal;
+        ThemeContent.Orientation = Orientation.Horizontal;
         ThemeContent.Spacing = compact ? 0 : 12;
         ThemeContent.Width = compact ? 20 : double.NaN;
-        ThemeButton.Width = compact ? 44 : double.NaN;
-        ThemeButton.Margin = compact ? new Thickness(8, 8, 8, 8) : new Thickness(12, 8, 12, 8);
-        ThemeButton.Padding = compact ? new Thickness(0, 8, 0, 8) : new Thickness(12, 8, 12, 8);
+        ThemeContent.Height = compact ? 20 : double.NaN;
+        ThemeButton.Width = compact ? 40 : double.NaN;
+        ThemeButton.Margin = compact ? new Thickness(2, 8, 2, 8) : new Thickness(12, 8, 12, 8);
+        ThemeButton.Padding = compact ? new Thickness(0, 0, 0, 0) : new Thickness(12, 8, 12, 8);
     }
 
     private void SyncThemeState()
