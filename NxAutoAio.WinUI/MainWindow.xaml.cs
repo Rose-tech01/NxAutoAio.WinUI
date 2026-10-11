@@ -14,7 +14,7 @@ public sealed partial class MainWindow : Window
         RootGrid.Loaded += RootGrid_Loaded;
         RootGrid.ActualThemeChanged += RootGrid_ActualThemeChanged;
         MainNavigation.SelectedItem = MainNavigation.MenuItems[0];
-        ContentFrame.Navigate(typeof(Views.DeclarationPage));
+        ContentFrame.Navigate(typeof(Views.DashboardPage));
     }
 
     private void RootGrid_Loaded(object sender, RoutedEventArgs e)
@@ -45,6 +45,7 @@ public sealed partial class MainWindow : Window
 
         var pageType = item.Tag?.ToString() switch
         {
+            "Dashboard" => typeof(Views.DashboardPage),
             "Tcs" => typeof(Views.TcsPage),
             "As400" => typeof(Views.As400Page),
             "Scsc" => typeof(Views.ScscPage),

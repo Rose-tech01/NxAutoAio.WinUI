@@ -51,6 +51,9 @@
                 </Grid>
             </controls:NavigationView.Header>
             <controls:NavigationView.MenuItems>
+                <controls:NavigationViewItem Content="Dashboard" Tag="Dashboard" ToolTipService.ToolTip="Dashboard tổng quan">
+                    <controls:NavigationViewItem.Icon><SymbolIcon Symbol="Home" /></controls:NavigationViewItem.Icon>
+                </controls:NavigationViewItem>
                 <controls:NavigationViewItem Content="In Tờ Khai" Tag="Declaration" ToolTipService.ToolTip="In Tờ Khai">
                     <controls:NavigationViewItem.Icon><SymbolIcon Symbol="Print" /></controls:NavigationViewItem.Icon>
                 </controls:NavigationViewItem>
