@@ -9,10 +9,12 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        <!-- Tiêu đề trang tra cứu dịch vụ TCS. -->
         <StackPanel>
             <TextBlock Text="Dịch vụ TCS" Style="{StaticResource PageTitleStyle}" />
             <TextBlock Text="Tra cứu và quản lý dữ liệu tờ cần" Opacity="0.68" />
         </StackPanel>
+        <!-- Các thao tác nạp danh sách, tra thông quan/phí và in; hiện được mô phỏng. -->
         <Grid x:Name="ToolbarGrid" Grid.Row="1" Margin="0,24,0,12">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" /><ColumnDefinition Width="Auto" />
@@ -25,6 +27,7 @@
             <Button x:Name="PrintButton" Grid.Column="3" Content="In Tờ Cần" Style="{StaticResource ToolbarButtonStyle}" Click="Action_Click" />
             <TextBlock x:Name="FileStatus" Text="Dữ liệu mẫu" VerticalAlignment="Center" Opacity="0.7" />
         </Grid>
+        <!-- Tìm MAWB, lọc trạng thái TCS và hiển thị số dòng/được chọn. -->
         <Grid x:Name="FilterGrid" Grid.Row="2" Margin="0,0,0,12" ColumnSpacing="12" RowSpacing="8">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -42,6 +45,7 @@
                        VerticalAlignment="Center" HorizontalAlignment="Left"
                        TextTrimming="CharacterEllipsis" Opacity="0.7" />
         </Grid>
+        <!-- Bảng MAWB; các cột lấy dữ liệu từ MawbModel. -->
         <ScrollViewer Grid.Row="3" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
         <Border MinWidth="860" Style="{StaticResource CardStyle}" Padding="0">
             <Grid>

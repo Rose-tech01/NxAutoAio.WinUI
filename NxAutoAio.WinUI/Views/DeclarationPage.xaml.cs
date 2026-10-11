@@ -7,9 +7,13 @@ using NxAutoAio.WinUI.Models;
 
 namespace NxAutoAio.WinUI.Views;
 
+/// <summary>
+/// Tìm, lọc và chọn các tệp tờ khai để chuẩn bị xử lý/in.
+/// Dữ liệu và thao tác thư mục/in hiện đang được mô phỏng.
+/// </summary>
 public sealed partial class DeclarationPage : Page
 {
-    // Dữ liệu mẫu mô phỏng file tờ khai tìm thấy trong thư mục vận hành.
+    // Danh sách mẫu thay cho kết quả quét thư mục; trạng thái dùng để thử bộ lọc và giao diện.
     private readonly ObservableCollection<PrintDocumentModel> _allDocuments = new()
     {
         new() { Index = 1, FileName = "declaration_738_12345670.xlsx", Mawb = "738-12345670", Hawb = "HWB-001", FileFormat = "Excel", PageCount = 4, BarcodeStatus = "Có", PrintStatus = "Chưa xử lý", LastUpdated = "Vừa xong" },
@@ -27,6 +31,7 @@ public sealed partial class DeclarationPage : Page
     public DeclarationPage()
     {
         InitializeComponent();
+        // Áp dụng bộ lọc mặc định và bố cục thích ứng sau khi trang được tải.
         ApplyFilter();
         Loaded += (_, _) => UpdateLayout(PageRoot.ActualWidth);
     }
@@ -35,6 +40,7 @@ public sealed partial class DeclarationPage : Page
 
     private void UpdateLayout(double width)
     {
+        // Chuyển bảng tài liệu và tùy chọn sang hai hàng khi vùng hiển thị hẹp.
         var narrow = width < 900;
         ContentGrid.ColumnDefinitions.Clear();
         ContentGrid.RowDefinitions.Clear();
@@ -75,7 +81,7 @@ public sealed partial class DeclarationPage : Page
 
     private void ChooseFolder_Click(object sender, RoutedEventArgs e)
     {
-        // TODO(backend): mở FolderPicker, quét file và map kết quả vào PrintDocumentModel.
+        // Đang hiển thị đường dẫn giả; tích hợp thật cần chọn thư mục, quét tệp và tạo model.
         FolderStatus.Text = @"C:\Logistics\ToKhai\2026-10-11";
         ToolTipService.SetToolTip(FolderStatus, FolderStatus.Text);
         ResultStatus.Text = $"{_allDocuments.Count} file";
@@ -83,9 +89,11 @@ public sealed partial class DeclarationPage : Page
 
     private void OpenFolder_Click(object sender, RoutedEventArgs e)
     {
-        // TODO(backend): mở thư mục thật bằng launcher hoặc native C++.
+        // Chưa mở thư mục trên máy; thay phần mô phỏng bằng launcher hoặc native C++.
         StatusText.Text = "Đã mô phỏng mở thư mục";
     }
+
+    // Làm mới dữ liệu mẫu rồi áp dụng lại truy vấn và trạng thái đang chọn.
     private void Refresh_Click(object sender, RoutedEventArgs e) { FolderStatus.Text = "Đã quét lại dữ liệu mẫu"; ApplyFilter(); }
     private void SearchBox_TextChanged(object sender, TextChangedEventArgs e) => ApplyFilter();
     private void StatusFilter_SelectionChanged(object sender, SelectionChangedEventArgs e) => ApplyFilter();
@@ -93,6 +101,7 @@ public sealed partial class DeclarationPage : Page
     private void ApplyFilter()
     {
         if (DocumentList is null) return;
+        // Tìm không phân biệt hoa/thường trên tên tệp, MAWB và HAWB; trạng thái được lọc riêng.
         var query = SearchBox?.Text.Trim() ?? string.Empty;
         var status = (StatusFilter?.SelectedItem as ComboBoxItem)?.Tag?.ToString() ?? "All";
         var items = _allDocuments.Where(item =>
@@ -106,13 +115,14 @@ public sealed partial class DeclarationPage : Page
         UpdateSummary();
     }
 
+    // Chọn/bỏ chọn toàn bộ danh sách gốc, kể cả các dòng hiện không khớp bộ lọc.
     private void SelectAll_Click(object sender, RoutedEventArgs e) { foreach (var item in _allDocuments) item.IsSelected = true; UpdateSummary(); }
     private void ClearSelection_Click(object sender, RoutedEventArgs e) { foreach (var item in _allDocuments) item.IsSelected = false; UpdateSummary(); }
     private void StartPrint_Click(object sender, RoutedEventArgs e)
     {
         var selected = _allDocuments.Count(item => item.IsSelected);
         if (selected == 0) { StatusText.Text = "Hãy chọn ít nhất một tài liệu"; return; }
-        // TODO(backend): gửi các file đã chọn cho hàng đợi in và nhận tiến độ theo từng file.
+        // Hiện chỉ cập nhật trạng thái minh họa; tích hợp thật cần gửi danh sách vào hàng đợi in.
         StatusText.Text = $"Đang mô phỏng in {selected} tài liệu";
         PrintProgress.Value = 35;
         StartButton.IsEnabled = false;

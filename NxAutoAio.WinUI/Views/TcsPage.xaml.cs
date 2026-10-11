@@ -7,9 +7,12 @@ using System.Linq;
 
 namespace NxAutoAio.WinUI.Views;
 
+/// <summary>
+/// Hiển thị MAWB phục vụ tra cứu TCS; dữ liệu và thao tác dịch vụ hiện là mô phỏng.
+/// </summary>
 public sealed partial class TcsPage : Page
 {
-    // Dữ liệu mẫu để dựng giao diện. Khi có backend, thay bằng TcsService.LoadAsync().
+    // Bộ dữ liệu mẫu để thử tìm kiếm, lọc trạng thái và chọn nhiều MAWB.
     private readonly ObservableCollection<MawbModel> _allItems = new()
     {
         new() { Index = 1, Number = "738-12345670", HawbCount = 4, TcsStatus = "Đã thông quan", Fee = "850.000 đ", PrintStatus = "Sẵn sàng" },
@@ -23,6 +26,7 @@ public sealed partial class TcsPage : Page
     public TcsPage()
     {
         InitializeComponent();
+        // Hiển thị dữ liệu ban đầu và bố trí thanh lọc/công cụ theo kích thước trang.
         LoadRows();
         Loaded += (_, _) => UpdateLayout(PageRoot.ActualWidth);
         Loaded += (_, _) => UpdateFilterLayout(PageRoot.ActualWidth);
@@ -39,6 +43,7 @@ public sealed partial class TcsPage : Page
 
     private void UpdateFilterLayout(double width)
     {
+        // Trên màn hình hẹp, chuyển ô tìm kiếm lên hàng riêng để giữ các bộ lọc dễ dùng.
         var narrow = width < 680;
         FilterGrid.RowDefinitions.Clear();
         FilterGrid.ColumnDefinitions.Clear();
@@ -79,6 +84,7 @@ public sealed partial class TcsPage : Page
 
     private void UpdateLayout(double width)
     {
+        // Gom các nút thao tác thành nhiều hàng khi chiều rộng không đủ cho một thanh ngang.
         var narrow = width < 760;
         ToolbarGrid.RowDefinitions.Clear();
         ToolbarGrid.ColumnDefinitions.Clear();
@@ -124,12 +130,13 @@ public sealed partial class TcsPage : Page
 
     private void Load_Click(object sender, RoutedEventArgs e)
     {
-        // TODO(backend): gọi API/C++ để nạp MAWB từ TCS hoặc nguồn dữ liệu trung gian.
+        // Chỉ xác nhận số dòng mẫu; thay bằng lời gọi API/C++ khi kết nối nguồn TCS.
         FileStatus.Text = $"{_allItems.Count} dòng dữ liệu mẫu đã nạp";
     }
 
     private void LoadRows()
     {
+        // Gán lại danh sách gốc và đặt bộ đếm ban đầu khi trang được mở.
         MawbList.ItemsSource = null;
         MawbList.ItemsSource = _allItems;
         SelectionStatus.Text = $"{_allItems.Count} bản ghi";
@@ -144,6 +151,7 @@ public sealed partial class TcsPage : Page
         if (MawbList is null || SearchBox is null || StatusFilter is null)
             return;
 
+        // Kết hợp tìm số MAWB với trạng thái TCS; danh sách kết quả không thay đổi dữ liệu gốc.
         var query = SearchBox.Text.Trim();
         var status = (StatusFilter.SelectedItem as ComboBoxItem)?.Tag?.ToString() ?? "All";
         var filtered = _allItems.Where(item =>
@@ -156,6 +164,7 @@ public sealed partial class TcsPage : Page
 
     private void MawbList_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
+        // Bộ đếm hiển thị số dòng được chọn, hoặc tổng số dòng khi chưa chọn dòng nào.
         SelectionStatus.Text = MawbList.SelectedItems.Count > 0
             ? $"Đã chọn {MawbList.SelectedItems.Count} dòng"
             : $"{MawbList.Items.Count} bản ghi";
@@ -164,7 +173,7 @@ public sealed partial class TcsPage : Page
     private void Action_Click(object sender, RoutedEventArgs e)
     {
         var selected = MawbList.SelectedItems.Count;
-        // TODO(backend): truyền danh sách MAWB đã chọn vào thao tác tra thông quan/tra phí/in.
+        // Chưa gọi dịch vụ; đây là điểm nối để truyền MAWB đã chọn tới thao tác tương ứng.
         FileStatus.Text = selected > 0
             ? $"Đang mô phỏng thao tác cho {selected} MAWB"
             : "Hãy chọn ít nhất một MAWB để xử lý hàng loạt";

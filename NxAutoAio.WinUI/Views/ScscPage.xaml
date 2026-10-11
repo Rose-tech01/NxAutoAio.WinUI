@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <StackPanel Padding="32" Spacing="18">
+        <!-- Thông báo hiện trạng; các công cụ SCSC chưa được triển khai trong bản này. -->
         <TextBlock Text="Dịch vụ SCSC" Style="{StaticResource PageTitleStyle}" />
         <TextBlock Text="Các công cụ dành riêng cho kho SCSC" Opacity="0.68" />
         <InfoBar IsOpen="True" Severity="Warning"

@@ -13,6 +13,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
+            <!-- Tiêu đề, bộ lọc kỳ thống kê và thao tác làm mới dashboard. -->
             <Grid x:Name="HeaderGrid" Grid.Row="0" ColumnSpacing="16" RowSpacing="8">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -47,6 +48,7 @@
                 </Grid>
             </Grid>
 
+            <!-- Các chỉ số nhanh; code-behind thay đổi số cột theo chiều rộng trang. -->
             <Grid Grid.Row="1" Margin="0,20,0,16" ColumnSpacing="12">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" /><ColumnDefinition Width="*" />
@@ -97,6 +99,7 @@
                 </Border>
             </Grid>
 
+            <!-- Danh sách việc cần xử lý và cảnh báo vận hành. -->
             <Grid x:Name="WorkGrid" Grid.Row="2" ColumnSpacing="16" RowSpacing="12">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*" /><ColumnDefinition Width="*" />
@@ -161,6 +164,7 @@
                 </Border>
             </Grid>
 
+            <!-- Tiến độ các quy trình: thông quan, in, tra phí và đồng bộ AS400. -->
             <Grid x:Name="StatusGrid" Grid.Row="3" ColumnSpacing="16" RowSpacing="12">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" /><ColumnDefinition Width="*" />
@@ -192,6 +196,7 @@
                 </Border>
             </Grid>
 
+            <!-- Trạng thái kết nối các dịch vụ và nhật ký hoạt động gần đây. -->
             <Grid x:Name="BottomGrid" Grid.Row="4" ColumnSpacing="16" RowSpacing="12">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" /><ColumnDefinition Width="*" />
@@ -219,6 +224,7 @@
                 </Border>
             </Grid>
 
+            <!-- Nhãn nhắc rằng các số liệu trên trang hiện là dữ liệu mẫu. -->
             <TextBlock Grid.Row="5" Text="Dữ liệu mẫu • Đồng bộ gần nhất: 10:28:42"
                        FontSize="12" Opacity="0.6" Margin="0,4,0,0" />
         </Grid>

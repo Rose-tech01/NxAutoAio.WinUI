@@ -6,10 +6,12 @@
     xmlns:controls="using:Microsoft.UI.Xaml.Controls">
     <Application.Resources>
         <ResourceDictionary>
+            <!-- Nạp tài nguyên mặc định của các điều khiển WinUI. -->
             <ResourceDictionary.MergedDictionaries>
                 <controls:XamlControlsResources />
             </ResourceDictionary.MergedDictionaries>
 
+            <!-- Bảng màu dùng chung, có hỗ trợ màu nền theo theme của Windows. -->
             <Color x:Key="AccentColor">#19BE8E</Color>
             <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}" />
             <SolidColorBrush x:Key="CardBrush" Color="{ThemeResource SystemChromeMediumLowColor}" />
@@ -17,6 +19,7 @@
             <SolidColorBrush x:Key="MutedBrush" Color="{ThemeResource TextFillColorSecondary}" />
             <SolidColorBrush x:Key="BorderBrush" Color="{ThemeResource SurfaceStrokeColorDefault}" />
 
+            <!-- Kiểu chữ và thẻ nội dung dùng lại trên các trang. -->
             <Style x:Key="PageTitleStyle" TargetType="TextBlock">
                 <Setter Property="FontSize" Value="32" />
                 <Setter Property="FontWeight" Value="SemiBold" />
@@ -35,6 +38,7 @@
                 <Setter Property="Padding" Value="24" />
                 <Setter Property="Margin" Value="0,0,0,16" />
             </Style>
+            <!-- Kiểu nút thao tác chung, bao gồm trạng thái rê chuột/nhấn/vô hiệu hóa. -->
             <Style x:Key="ToolbarButtonStyle" TargetType="Button">
                 <Setter Property="MinHeight" Value="38" />
                 <Setter Property="Padding" Value="16,0" />

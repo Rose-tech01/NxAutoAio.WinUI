@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ScrollViewer>
         <StackPanel Padding="32" Spacing="16">
+            <!-- Thông tin nhận diện ứng dụng, phiên bản, tác giả và mô tả sản phẩm. -->
             <TextBlock Text="Thông tin tác giả" Style="{StaticResource PageTitleStyle}" />
             <TextBlock Text="Thông tin về ứng dụng và phiên bản phát hành" Opacity="0.68" />
             <Border Style="{StaticResource CardStyle}">
