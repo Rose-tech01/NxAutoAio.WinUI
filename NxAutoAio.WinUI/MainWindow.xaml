@@ -16,6 +16,7 @@
             IsSettingsVisible="False"
             IsPaneToggleButtonVisible="True"
             PaneDisplayMode="Left"
+            DisplayModeChanged="MainNavigation_DisplayModeChanged"
             SelectionChanged="MainNavigation_SelectionChanged">
             <controls:NavigationView.PaneHeader>
                 <StackPanel Orientation="Horizontal" Spacing="12" Margin="12,4,12,16">
@@ -33,24 +34,19 @@
                 <Grid Margin="0,8,24,8">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <AutoSuggestBox
+                    <AutoSuggestBox x:Name="SettingsSearchBox"
                         PlaceholderText="Tìm kiếm cài đặt..."
                         MaxWidth="620"
-                        HorizontalAlignment="Left" />
-                    <Button x:Name="ThemeButton"
-                            Grid.Column="1"
-                            Width="42"
-                            Height="42"
-                            Padding="0"
-                            ToolTipService.ToolTip="Chuyển giao diện sáng/tối"
-                            Click="ThemeButton_Click">
-                        <FontIcon x:Name="ThemeIcon" Glyph="&#xE706;" FontSize="18" />
-                    </Button>
+                        MinWidth="180"
+                        Margin="0,0,12,0"
+                        HorizontalAlignment="Stretch" />
                 </Grid>
             </controls:NavigationView.Header>
             <controls:NavigationView.MenuItems>
+                <controls:NavigationViewItem Content="Dashboard" Tag="Dashboard" ToolTipService.ToolTip="Dashboard tổng quan">
+                    <controls:NavigationViewItem.Icon><SymbolIcon Symbol="Home" /></controls:NavigationViewItem.Icon>
+                </controls:NavigationViewItem>
                 <controls:NavigationViewItem Content="In Tờ Khai" Tag="Declaration" ToolTipService.ToolTip="In Tờ Khai">
                     <controls:NavigationViewItem.Icon><SymbolIcon Symbol="Print" /></controls:NavigationViewItem.Icon>
                 </controls:NavigationViewItem>
@@ -70,6 +66,25 @@
                     <controls:NavigationViewItem.Icon><SymbolIcon Symbol="ContactInfo" /></controls:NavigationViewItem.Icon>
                 </controls:NavigationViewItem>
             </controls:NavigationView.MenuItems>
+            <controls:NavigationView.PaneFooter>
+                <controls:NavigationViewItem x:Name="ThemeFooterItem"
+                                             Content="Giao diện tối"
+                                             ToolTipService.ToolTip="Chuyển giao diện sáng/tối"
+                                             Tapped="ThemeFooterItem_Tapped">
+                    <controls:NavigationViewItem.Icon>
+                        <FontIcon x:Name="ThemeIcon"
+                                  Glyph="&#xE706;"
+                                  FontFamily="Segoe Fluent Icons"
+                                  FontSize="14"
+                                  FontWeight="SemiBold"
+                                  Width="16"
+                                  Height="16"
+                                  Margin="-4,0,0,0"
+                                  HorizontalAlignment="Left"
+                                  VerticalAlignment="Center" />
+                    </controls:NavigationViewItem.Icon>
+                </controls:NavigationViewItem>
+            </controls:NavigationView.PaneFooter>
             <Frame x:Name="ContentFrame" IsNavigationStackEnabled="False" />
         </controls:NavigationView>
     </Grid>

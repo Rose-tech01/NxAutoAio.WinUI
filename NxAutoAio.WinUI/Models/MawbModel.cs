@@ -11,4 +11,6 @@ public sealed class MawbModel
     public string Weight { get; init; } = string.Empty;
     public string TcsStatus { get; init; } = string.Empty;
     public string PrintStatus { get; init; } = string.Empty;
+    public int HawbCount { get; init; }
+    public string Fee { get; init; } = "Chưa tra";
 }
