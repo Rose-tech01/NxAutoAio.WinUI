@@ -2,6 +2,8 @@ using System;
 using System.Collections.ObjectModel;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using NxAutoAio.WinUI.Constants;
+using NxAutoAio.WinUI.Data;
 using NxAutoAio.WinUI.Helpers;
 using NxAutoAio.WinUI.Models;
 using System.Linq;
@@ -14,15 +16,7 @@ namespace NxAutoAio.WinUI.Views;
 public sealed partial class TcsPage : Page
 {
     // Bộ dữ liệu mẫu để thử tìm kiếm, lọc trạng thái và chọn nhiều MAWB.
-    private readonly ObservableCollection<MawbModel> _allItems = new()
-    {
-        new() { Index = 1, Number = "738-12345670", HawbCount = 4, TcsStatus = "Đã thông quan", Fee = "850.000 đ", PrintStatus = "Sẵn sàng" },
-        new() { Index = 2, Number = "738-12345681", HawbCount = 8, TcsStatus = "Đang xử lý", Fee = "Chưa tra", PrintStatus = "Chờ in" },
-        new() { Index = 3, Number = "738-12345692", HawbCount = 2, TcsStatus = "Đã thông quan", Fee = "420.000 đ", PrintStatus = "Sẵn sàng" },
-        new() { Index = 4, Number = "738-12345703", HawbCount = 0, TcsStatus = "Cần kiểm tra", Fee = "Lỗi dữ liệu", PrintStatus = "Chưa in" },
-        new() { Index = 5, Number = "738-12345714", HawbCount = 6, TcsStatus = "Đang xử lý", Fee = "Chưa tra", PrintStatus = "Chờ in" },
-        new() { Index = 6, Number = "738-12345725", HawbCount = 3, TcsStatus = "Đã thông quan", Fee = "610.000 đ", PrintStatus = "Đã in" }
-    };
+    private readonly ObservableCollection<MawbModel> _allItems = SampleDataFactory.CreateTcsMawbs();
 
     public TcsPage()
     {
@@ -45,7 +39,7 @@ public sealed partial class TcsPage : Page
     private void UpdateFilterLayout(double width)
     {
         // Trên màn hình hẹp, chuyển ô tìm kiếm lên hàng riêng để giữ các bộ lọc dễ dùng.
-        var narrow = width < 680;
+        var narrow = width < ResponsiveBreakpoints.TcsFilterNarrow;
         FilterGrid.RowDefinitions.Clear();
         FilterGrid.ColumnDefinitions.Clear();
 
@@ -86,7 +80,7 @@ public sealed partial class TcsPage : Page
     private void UpdateLayout(double width)
     {
         // Gom các nút thao tác thành nhiều hàng khi chiều rộng không đủ cho một thanh ngang.
-        var narrow = width < 760;
+        var narrow = width < ResponsiveBreakpoints.TcsToolbarNarrow;
         ToolbarGrid.RowDefinitions.Clear();
         ToolbarGrid.ColumnDefinitions.Clear();
 
