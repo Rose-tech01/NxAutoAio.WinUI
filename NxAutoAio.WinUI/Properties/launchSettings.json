@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "NxAutoAio.WinUI (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "NxAutoAio.WinUI (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

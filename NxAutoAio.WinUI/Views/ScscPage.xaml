@@ -1,0 +1,19 @@
+<Page
+    x:Class="NxAutoAio.WinUI.Views.ScscPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel Padding="32" Spacing="18">
+        <TextBlock Text="Dịch vụ SCSC" Style="{StaticResource PageTitleStyle}" />
+        <TextBlock Text="Các công cụ dành riêng cho kho SCSC" Opacity="0.68" />
+        <InfoBar IsOpen="True" Severity="Warning"
+                 Title="Đang trong lộ trình phát triển"
+                 Message="Chức năng tra cứu thông quan, đóng phí lao vụ và in tờ cần đang được thiết kế." />
+        <Border Style="{StaticResource CardStyle}">
+            <StackPanel Spacing="10">
+                <TextBlock Text="Chưa sẵn sàng" Style="{StaticResource SectionTitleStyle}" />
+                <TextBlock Text="Vui lòng chờ bản cập nhật tiếp theo của NX Auto AIO."
+                           TextWrapping="Wrap" Opacity="0.7" />
+            </StackPanel>
+        </Border>
+    </StackPanel>
+</Page>

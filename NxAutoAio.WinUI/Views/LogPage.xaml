@@ -1,0 +1,21 @@
+<Page
+    x:Class="NxAutoAio.WinUI.Views.LogPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid Padding="32">
+        <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="*" /></Grid.RowDefinitions>
+        <StackPanel>
+            <TextBlock Text="Nhật ký hệ thống" Style="{StaticResource PageTitleStyle}" />
+            <TextBlock Text="Nhật ký vận hành thời gian thực" Opacity="0.68" />
+        </StackPanel>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,24,0,16">
+            <Button Content="Xóa log" Style="{StaticResource ToolbarButtonStyle}" />
+            <Button Content="Sao chép log" Style="{StaticResource ToolbarButtonStyle}" />
+            <Button Content="Lưu log" Style="{StaticResource ToolbarButtonStyle}" />
+        </StackPanel>
+        <Border Grid.Row="2" Style="{StaticResource CardStyle}" Padding="0">
+            <TextBox AcceptsReturn="True" IsReadOnly="True" TextWrapping="Wrap"
+                     FontFamily="Cascadia Mono" PlaceholderText="Nhật ký hệ thống sẽ hiển thị tại đây..." />
+        </Border>
+    </Grid>
+</Page>

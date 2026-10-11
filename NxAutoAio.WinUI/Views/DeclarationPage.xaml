@@ -1,0 +1,62 @@
+<Page
+    x:Class="NxAutoAio.WinUI.Views.DeclarationPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Padding="32" Spacing="4">
+            <TextBlock Text="In Tờ Khai" Style="{StaticResource PageTitleStyle}" />
+            <TextBlock Text="Văn phòng / Logistics  •  Hệ thống cấu hình"
+                       Opacity="0.68" Margin="0,0,0,20" />
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="18">
+                    <TextBlock Text="Nguồn tài liệu" Style="{StaticResource SectionTitleStyle}" />
+                    <Grid ColumnSpacing="18">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Button Content="Chọn thư mục tờ khai"
+                                Style="{StaticResource ToolbarButtonStyle}"
+                                Click="ChooseFolder_Click" />
+                        <TextBlock Grid.Column="1" x:Name="FolderStatus"
+                                   Text="Chưa chọn thư mục" VerticalAlignment="Center" Opacity="0.7" />
+                    </Grid>
+                    <RadioButtons Header="Định dạng tệp">
+                        <RadioButton Content="In file EXCEL" IsChecked="True" />
+                        <RadioButton Content="In file PDF" />
+                    </RadioButtons>
+                </StackPanel>
+            </Border>
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="18">
+                    <TextBlock Text="Tùy chọn in" Style="{StaticResource SectionTitleStyle}" />
+                    <ComboBox Header="Máy in đích" SelectedIndex="0">
+                        <ComboBoxItem Content="Microsoft Print to PDF" />
+                        <ComboBoxItem Content="Default Printer" />
+                    </ComboBox>
+                    <CheckBox Content="Bỏ qua lấy mã vạch" />
+                    <RadioButtons Header="Phạm vi trang">
+                        <RadioButton Content="In toàn bộ tài liệu" IsChecked="True" />
+                        <RadioButton Content="In theo dải trang" />
+                    </RadioButtons>
+                    <StackPanel Orientation="Horizontal" Spacing="12">
+                        <NumberBox Header="Từ trang" Value="1" Minimum="1" Width="140" />
+                        <NumberBox Header="Đến trang" Value="1" Minimum="1" Width="140" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+            <TextBlock Text="Bảng điều khiển &amp; tiến độ"
+                       Style="{StaticResource SectionTitleStyle}" Margin="0,12,0,8" />
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="16">
+                    <Button Content="Bắt đầu chạy tiến trình in"
+                            Style="{StaticResource ToolbarButtonStyle}"
+                            HorizontalAlignment="Stretch" Click="StartPrint_Click" />
+                    <TextBlock x:Name="StatusText"
+                               Text="Trạng thái: Sẵn sàng làm việc." Opacity="0.75" />
+                    <ProgressBar x:Name="PrintProgress" Minimum="0" Maximum="100" Value="0" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

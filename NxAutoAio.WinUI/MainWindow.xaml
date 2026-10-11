@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window
+    x:Class="NxAutoAio.WinUI.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    Title="NX Auto AIO v1.8.2">
+    <Window.SystemBackdrop>
+        <MicaBackdrop />
+    </Window.SystemBackdrop>
+
+    <Grid x:Name="RootGrid">
+        <controls:NavigationView
+            x:Name="MainNavigation"
+            IsBackButtonVisible="Collapsed"
+            IsSettingsVisible="False"
+            IsPaneToggleButtonVisible="True"
+            PaneDisplayMode="Left"
+            SelectionChanged="MainNavigation_SelectionChanged">
+            <controls:NavigationView.PaneHeader>
+                <StackPanel Orientation="Horizontal" Spacing="12" Margin="12,4,12,16">
+                    <Border Width="42" Height="42" CornerRadius="10" Background="{StaticResource AccentBrush}">
+                        <TextBlock Text="NX" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                   FontWeight="SemiBold" Foreground="White" />
+                    </Border>
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Text="NX Auto AIO" FontWeight="SemiBold" />
+                        <TextBlock Text="Logistics Automation" FontSize="12" Opacity="0.65" />
+                    </StackPanel>
+                </StackPanel>
+            </controls:NavigationView.PaneHeader>
+            <controls:NavigationView.Header>
+                <Grid Margin="0,8,24,8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <AutoSuggestBox
+                        PlaceholderText="Tìm kiếm cài đặt..."
+                        MaxWidth="620"
+                        HorizontalAlignment="Left" />
+                    <Button x:Name="ThemeButton"
+                            Grid.Column="1"
+                            Width="42"
+                            Height="42"
+                            Padding="0"
+                            ToolTipService.ToolTip="Chuyển giao diện sáng/tối"
+                            Click="ThemeButton_Click">
+                        <FontIcon x:Name="ThemeIcon" Glyph="&#xE706;" FontSize="18" />
+                    </Button>
+                </Grid>
+            </controls:NavigationView.Header>
+            <controls:NavigationView.MenuItems>
+                <controls:NavigationViewItem Content="In Tờ Khai" Tag="Declaration" ToolTipService.ToolTip="In Tờ Khai">
+                    <controls:NavigationViewItem.Icon><SymbolIcon Symbol="Print" /></controls:NavigationViewItem.Icon>
+                </controls:NavigationViewItem>
+                <controls:NavigationViewItem Content="Dịch vụ TCS" Tag="Tcs" ToolTipService.ToolTip="Dịch vụ TCS">
+                    <controls:NavigationViewItem.Icon><SymbolIcon Symbol="Globe" /></controls:NavigationViewItem.Icon>
+                </controls:NavigationViewItem>
+                <controls:NavigationViewItem Content="Dữ liệu AS400" Tag="As400" ToolTipService.ToolTip="Dữ liệu AS400">
+                    <controls:NavigationViewItem.Icon><SymbolIcon Symbol="Document" /></controls:NavigationViewItem.Icon>
+                </controls:NavigationViewItem>
+                <controls:NavigationViewItem Content="Dịch vụ SCSC" Tag="Scsc" ToolTipService.ToolTip="Dịch vụ SCSC">
+                    <controls:NavigationViewItem.Icon><SymbolIcon Symbol="Globe" /></controls:NavigationViewItem.Icon>
+                </controls:NavigationViewItem>
+                <controls:NavigationViewItem Content="Nhật ký hệ thống" Tag="Logs" ToolTipService.ToolTip="Nhật ký hệ thống">
+                    <controls:NavigationViewItem.Icon><SymbolIcon Symbol="AllApps" /></controls:NavigationViewItem.Icon>
+                </controls:NavigationViewItem>
+                <controls:NavigationViewItem Content="Thông tin tác giả" Tag="About" ToolTipService.ToolTip="Thông tin tác giả">
+                    <controls:NavigationViewItem.Icon><SymbolIcon Symbol="ContactInfo" /></controls:NavigationViewItem.Icon>
+                </controls:NavigationViewItem>
+            </controls:NavigationView.MenuItems>
+            <Frame x:Name="ContentFrame" IsNavigationStackEnabled="False" />
+        </controls:NavigationView>
+    </Grid>
+</Window>

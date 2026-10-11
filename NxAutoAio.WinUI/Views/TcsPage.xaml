@@ -1,0 +1,58 @@
+<Page
+    x:Class="NxAutoAio.WinUI.Views.TcsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid Padding="32">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <TextBlock Text="Dịch vụ TCS" Style="{StaticResource PageTitleStyle}" />
+            <TextBlock Text="Tra cứu và quản lý dữ liệu tờ cần" Opacity="0.68" />
+        </StackPanel>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,24,0,16">
+            <Button Content="Nạp File List" Style="{StaticResource ToolbarButtonStyle}" Click="Load_Click" />
+            <Button Content="Tra Thông Quan" Style="{StaticResource ToolbarButtonStyle}" />
+            <Button Content="Tra Phí Lao Vụ" Style="{StaticResource ToolbarButtonStyle}" />
+            <Button Content="In Tờ Cần" Style="{StaticResource ToolbarButtonStyle}" />
+            <TextBlock x:Name="FileStatus" Text="Dữ liệu mẫu" VerticalAlignment="Center" Opacity="0.7" />
+        </StackPanel>
+        <Border Grid.Row="2" Style="{StaticResource CardStyle}" Padding="0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid Background="{StaticResource SubtleCardBrush}" Padding="16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="60" /><ColumnDefinition Width="180" />
+                        <ColumnDefinition Width="*" /><ColumnDefinition Width="150" /><ColumnDefinition Width="150" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="STT" /><TextBlock Text="Số hiệu MAWB" Grid.Column="1" />
+                    <TextBlock Text="Trạng thái hệ thống TCS" Grid.Column="2" />
+                    <TextBlock Text="Phí lao vụ" Grid.Column="3" /><TextBlock Text="Trạng thái in" Grid.Column="4" />
+                </Grid>
+                <ListView x:Name="MawbList" Grid.Row="1" SelectionMode="None"
+                          IsItemClickEnabled="False">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Padding="16,10" MinHeight="44">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="60" /><ColumnDefinition Width="180" />
+                                    <ColumnDefinition Width="*" /><ColumnDefinition Width="150" /><ColumnDefinition Width="150" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding Index}" />
+                                <TextBlock Text="{Binding Number}" Grid.Column="1" />
+                                <TextBlock Text="{Binding TcsStatus}" Grid.Column="2" />
+                                <TextBlock Text="Chưa tra" Grid.Column="3" Opacity="0.7" />
+                                <TextBlock Text="{Binding PrintStatus}" Grid.Column="4" Opacity="0.8" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </Border>
+    </Grid>
+</Page>
