@@ -5,6 +5,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using NxAutoAio.WinUI.Constants;
 using NxAutoAio.WinUI.Data;
+using NxAutoAio.WinUI.Helpers;
 using NxAutoAio.WinUI.Models;
 
 namespace NxAutoAio.WinUI.Views;
@@ -44,20 +45,16 @@ public sealed partial class As400Page : Page
             DataGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             DataGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
             DataGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-            Grid.SetColumn(MawbCard, 0);
-            Grid.SetRow(MawbCard, 0);
-            Grid.SetColumn(HawbCard, 0);
-            Grid.SetRow(HawbCard, 1);
+            GridLayoutHelper.SetPosition(MawbCard, 0, 0);
+            GridLayoutHelper.SetPosition(HawbCard, 1, 0);
         }
         else
         {
             DataGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             DataGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             DataGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-            Grid.SetColumn(MawbCard, 0);
-            Grid.SetRow(MawbCard, 0);
-            Grid.SetColumn(HawbCard, 1);
-            Grid.SetRow(HawbCard, 0);
+            GridLayoutHelper.SetPosition(MawbCard, 0, 0);
+            GridLayoutHelper.SetPosition(HawbCard, 0, 1);
         }
     }
 

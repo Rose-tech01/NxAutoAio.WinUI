@@ -43,7 +43,6 @@ public sealed partial class MainWindow : Window
     private void UpdateThemeButtonLayout()
     {
         // Mục theme ở chân NavigationView luôn có thể tương tác ở mọi chế độ hiển thị.
-        var compact = MainNavigation.DisplayMode != NavigationViewDisplayMode.Expanded;
         ThemeFooterItem.IsHitTestVisible = true;
     }
 
@@ -81,11 +80,6 @@ public sealed partial class MainWindow : Window
 
         if (ContentFrame.CurrentSourcePageType != pageType)
             ContentFrame.Navigate(pageType);
-    }
-
-    private void ThemeButton_Click(object sender, RoutedEventArgs e)
-    {
-        ToggleTheme();
     }
 
     private void ThemeFooterItem_Tapped(object sender, TappedRoutedEventArgs e)

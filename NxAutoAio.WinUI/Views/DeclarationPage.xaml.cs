@@ -1,10 +1,9 @@
-using System;
 using System.Collections.ObjectModel;
-using System.Linq;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using NxAutoAio.WinUI.Constants;
 using NxAutoAio.WinUI.Data;
+using NxAutoAio.WinUI.Helpers;
 using NxAutoAio.WinUI.Models;
 
 namespace NxAutoAio.WinUI.Views;
@@ -43,30 +42,30 @@ public sealed partial class DeclarationPage : Page
             ContentGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             ContentGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
             ContentGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-            Grid.SetColumn(DocumentCard, 0); Grid.SetRow(DocumentCard, 0);
-            Grid.SetColumn(OptionsCard, 0); Grid.SetRow(OptionsCard, 1);
+            GridLayoutHelper.SetPosition(DocumentCard, 0, 0);
+            GridLayoutHelper.SetPosition(OptionsCard, 1, 0);
             FilterGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
             FilterGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
             FilterGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             FilterGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(125) });
-            Grid.SetRow(SearchBox, 0); Grid.SetColumn(SearchBox, 0); Grid.SetColumnSpan(SearchBox, 2);
-            Grid.SetRow(StatusFilter, 1); Grid.SetColumn(StatusFilter, 0);
-            Grid.SetRow(ResultStatus, 1); Grid.SetColumn(ResultStatus, 1);
+            GridLayoutHelper.SetPosition(SearchBox, 0, 0, 2);
+            GridLayoutHelper.SetPosition(StatusFilter, 1, 0);
+            GridLayoutHelper.SetPosition(ResultStatus, 1, 1);
         }
         else
         {
             ContentGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             ContentGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(300) });
             ContentGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-            Grid.SetColumn(DocumentCard, 0); Grid.SetRow(DocumentCard, 0);
-            Grid.SetColumn(OptionsCard, 1); Grid.SetRow(OptionsCard, 0);
+            GridLayoutHelper.SetPosition(DocumentCard, 0, 0);
+            GridLayoutHelper.SetPosition(OptionsCard, 0, 1);
             FilterGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
             FilterGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             FilterGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(190) });
             FilterGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(125) });
-            Grid.SetRow(SearchBox, 0); Grid.SetColumn(SearchBox, 0);
-            Grid.SetRow(StatusFilter, 0); Grid.SetColumn(StatusFilter, 1);
-            Grid.SetRow(ResultStatus, 0); Grid.SetColumn(ResultStatus, 2);
+            GridLayoutHelper.SetPosition(SearchBox, 0, 0);
+            GridLayoutHelper.SetPosition(StatusFilter, 0, 1);
+            GridLayoutHelper.SetPosition(ResultStatus, 0, 2);
         }
     }
 
@@ -94,11 +93,8 @@ public sealed partial class DeclarationPage : Page
         if (DocumentList is null) return;
         // Tìm không phân biệt hoa/thường trên tên tệp, MAWB và HAWB; trạng thái được lọc riêng.
         var query = SearchBox?.Text.Trim() ?? string.Empty;
-        var status = (StatusFilter?.SelectedItem as ComboBoxItem)?.Tag?.ToString() ?? "All";
-        var items = _allDocuments.Where(item =>
-            (string.IsNullOrWhiteSpace(query) || item.FileName.Contains(query, StringComparison.OrdinalIgnoreCase) ||
-             item.Mawb.Contains(query, StringComparison.OrdinalIgnoreCase) || item.Hawb.Contains(query, StringComparison.OrdinalIgnoreCase)) &&
-            (status == "All" || item.PrintStatus == status || (status == "Lỗi" && item.PrintStatus == "Lỗi")));
+        var status = (StatusFilter?.SelectedItem as ComboBoxItem)?.Tag?.ToString() ?? StatusValues.All;
+        var items = FilterHelper.FilterDocuments(_allDocuments, query, status);
         var result = new ObservableCollection<PrintDocumentModel>(items);
         DocumentList.ItemsSource = result;
         EmptyState.Visibility = result.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
@@ -107,11 +103,11 @@ public sealed partial class DeclarationPage : Page
     }
 
     // Chọn/bỏ chọn toàn bộ danh sách gốc, kể cả các dòng hiện không khớp bộ lọc.
-    private void SelectAll_Click(object sender, RoutedEventArgs e) { foreach (var item in _allDocuments) item.IsSelected = true; UpdateSummary(); }
-    private void ClearSelection_Click(object sender, RoutedEventArgs e) { foreach (var item in _allDocuments) item.IsSelected = false; UpdateSummary(); }
+    private void SelectAll_Click(object sender, RoutedEventArgs e) { PrintWorkflowHelper.SelectAll(_allDocuments, true); UpdateSummary(); }
+    private void ClearSelection_Click(object sender, RoutedEventArgs e) { PrintWorkflowHelper.SelectAll(_allDocuments, false); UpdateSummary(); }
     private void StartPrint_Click(object sender, RoutedEventArgs e)
     {
-        var selected = _allDocuments.Count(item => item.IsSelected);
+        var selected = PrintWorkflowHelper.CountSelected(_allDocuments);
         if (selected == 0) { StatusText.Text = "Hãy chọn ít nhất một tài liệu"; return; }
         // Hiện chỉ cập nhật trạng thái minh họa; tích hợp thật cần gửi danh sách vào hàng đợi in.
         StatusText.Text = $"Đang mô phỏng in {selected} tài liệu";
@@ -120,5 +116,5 @@ public sealed partial class DeclarationPage : Page
         SuccessText.Text = "Thành công: 0";
         ErrorText.Text = "Lỗi: 0";
     }
-    private void UpdateSummary() => SummaryText.Text = $"Đã chọn: {_allDocuments.Count(item => item.IsSelected)}";
+    private void UpdateSummary() => SummaryText.Text = $"Đã chọn: {PrintWorkflowHelper.CountSelected(_allDocuments)}";
 }

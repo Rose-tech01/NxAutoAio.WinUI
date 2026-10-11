@@ -1,4 +1,3 @@
-using System;
 using System.Collections.ObjectModel;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -6,7 +5,6 @@ using NxAutoAio.WinUI.Constants;
 using NxAutoAio.WinUI.Data;
 using NxAutoAio.WinUI.Helpers;
 using NxAutoAio.WinUI.Models;
-using System.Linq;
 
 namespace NxAutoAio.WinUI.Views;
 
@@ -50,14 +48,9 @@ public sealed partial class TcsPage : Page
             FilterGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             FilterGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(120) });
 
-            Grid.SetRow(SearchBox, 0);
-            Grid.SetColumn(SearchBox, 0);
-            Grid.SetColumnSpan(SearchBox, 2);
-            Grid.SetRow(StatusFilter, 1);
-            Grid.SetColumn(StatusFilter, 0);
-            Grid.SetColumnSpan(StatusFilter, 1);
-            Grid.SetRow(SelectionStatus, 1);
-            Grid.SetColumn(SelectionStatus, 1);
+            GridLayoutHelper.SetPosition(SearchBox, 0, 0, 2);
+            GridLayoutHelper.SetPosition(StatusFilter, 1, 0);
+            GridLayoutHelper.SetPosition(SelectionStatus, 1, 1);
         }
         else
         {
@@ -66,14 +59,9 @@ public sealed partial class TcsPage : Page
             FilterGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(220) });
             FilterGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(120) });
 
-            Grid.SetRow(SearchBox, 0);
-            Grid.SetColumn(SearchBox, 0);
-            Grid.SetColumnSpan(SearchBox, 1);
-            Grid.SetRow(StatusFilter, 0);
-            Grid.SetColumn(StatusFilter, 1);
-            Grid.SetColumnSpan(StatusFilter, 1);
-            Grid.SetRow(SelectionStatus, 0);
-            Grid.SetColumn(SelectionStatus, 2);
+            GridLayoutHelper.SetPosition(SearchBox, 0, 0);
+            GridLayoutHelper.SetPosition(StatusFilter, 0, 1);
+            GridLayoutHelper.SetPosition(SelectionStatus, 0, 2);
         }
     }
 
@@ -95,9 +83,7 @@ public sealed partial class TcsPage : Page
             GridLayoutHelper.StretchButton(ClearanceButton, 0, 1);
             GridLayoutHelper.StretchButton(FeeButton, 1, 0);
             GridLayoutHelper.StretchButton(PrintButton, 1, 1);
-            Grid.SetRow(FileStatus, 2);
-            Grid.SetColumn(FileStatus, 0);
-            Grid.SetColumnSpan(FileStatus, 2);
+            GridLayoutHelper.SetPosition(FileStatus, 2, 0, 2);
         }
         else
         {
@@ -109,9 +95,7 @@ public sealed partial class TcsPage : Page
             GridLayoutHelper.StretchButton(ClearanceButton, 0, 1);
             GridLayoutHelper.StretchButton(FeeButton, 0, 2);
             GridLayoutHelper.StretchButton(PrintButton, 0, 3);
-            Grid.SetRow(FileStatus, 0);
-            Grid.SetColumn(FileStatus, 4);
-            Grid.SetColumnSpan(FileStatus, 1);
+            GridLayoutHelper.SetPosition(FileStatus, 0, 4);
         }
     }
 
@@ -140,10 +124,8 @@ public sealed partial class TcsPage : Page
 
         // Kết hợp tìm số MAWB với trạng thái TCS; danh sách kết quả không thay đổi dữ liệu gốc.
         var query = SearchBox.Text.Trim();
-        var status = (StatusFilter.SelectedItem as ComboBoxItem)?.Tag?.ToString() ?? "All";
-        var filtered = _allItems.Where(item =>
-            (string.IsNullOrWhiteSpace(query) || item.Number.Contains(query, StringComparison.OrdinalIgnoreCase)) &&
-            (status == "All" || item.TcsStatus == status));
+        var status = (StatusFilter.SelectedItem as ComboBoxItem)?.Tag?.ToString() ?? StatusValues.All;
+        var filtered = FilterHelper.FilterMawbs(_allItems, query, status);
 
         MawbList.ItemsSource = new ObservableCollection<MawbModel>(filtered);
         SelectionStatus.Text = $"{MawbList.Items.Count} bản ghi";
