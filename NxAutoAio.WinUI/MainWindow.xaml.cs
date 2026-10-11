@@ -45,7 +45,7 @@ public sealed partial class MainWindow : Window
     private void SyncThemeState()
     {
         _darkTheme = RootGrid.ActualTheme == ElementTheme.Dark;
-        ThemeIcon.Glyph = _darkTheme ? "\uE708" : "\uE706";
+        ThemeIcon.Glyph = _darkTheme ? "\uE706" : "\uE708";
         ThemeFooterItem.Content = _darkTheme ? "Giao diện sáng" : "Giao diện tối";
         ToolTipService.SetToolTip(
             ThemeFooterItem,
@@ -89,7 +89,7 @@ public sealed partial class MainWindow : Window
     {
         _darkTheme = !_darkTheme;
         RootGrid.RequestedTheme = _darkTheme ? ElementTheme.Dark : ElementTheme.Light;
-        ThemeIcon.Glyph = _darkTheme ? "\uE708" : "\uE706";
+        ThemeIcon.Glyph = _darkTheme ? "\uE706" : "\uE708";
         ThemeFooterItem.Content = _darkTheme ? "Giao diện sáng" : "Giao diện tối";
         ToolTipService.SetToolTip(
             ThemeFooterItem,

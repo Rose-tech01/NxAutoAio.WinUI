@@ -72,7 +72,13 @@
                                              ToolTipService.ToolTip="Chuyển giao diện sáng/tối"
                                              Tapped="ThemeFooterItem_Tapped">
                     <controls:NavigationViewItem.Icon>
-                        <FontIcon x:Name="ThemeIcon" Glyph="&#xE706;" FontSize="16" />
+                        <FontIcon x:Name="ThemeIcon"
+                                  Glyph="&#xE708;"
+                                  FontFamily="Segoe Fluent Icons"
+                                  FontSize="15"
+                                  FontWeight="SemiBold"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center" />
                     </controls:NavigationViewItem.Icon>
                 </controls:NavigationViewItem>
             </controls:NavigationView.PaneFooter>
