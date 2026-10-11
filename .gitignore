@@ -1,7 +1,27 @@
 .vs/
 **/bin/
 **/obj/
+
+# Visual Studio / .NET user-specific files
 *.user
 *.suo
 *.userprefs
+.vscode/
+.idea/
 
+# Build and publish output
+publish/
+artifacts/
+TestResults/
+*.pdb
+*.nupkg
+
+# Runtime and generated logs
+*.log
+logs/
+
+# Windows and IDE temporary files
+Thumbs.db
+Desktop.ini
+*.tmp
+*.bak
