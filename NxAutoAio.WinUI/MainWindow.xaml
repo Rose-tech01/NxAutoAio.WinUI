@@ -69,12 +69,23 @@
             <controls:NavigationView.PaneFooter>
                 <Button x:Name="ThemeButton"
                         HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
                         Margin="12,8"
                         Padding="12,8"
                         ToolTipService.ToolTip="Chuyển giao diện sáng/tối"
                         Click="ThemeButton_Click">
-                    <StackPanel Orientation="Horizontal" Spacing="12">
-                        <FontIcon x:Name="ThemeIcon" Glyph="&#xE706;" FontSize="18" />
+                    <StackPanel x:Name="ThemeContent"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Center"
+                                Spacing="12">
+                        <FontIcon x:Name="ThemeIcon"
+                                  Glyph="&#xE706;"
+                                  FontSize="18"
+                                  Width="20"
+                                  Height="20"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center" />
                         <TextBlock x:Name="ThemeLabel"
                                    Text="Giao diện tối"
                                    VerticalAlignment="Center" />
