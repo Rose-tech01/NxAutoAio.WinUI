@@ -1,5 +1,6 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using NxAutoAio.WinUI.Helpers;
 
 namespace NxAutoAio.WinUI.Views;
 
@@ -27,14 +28,14 @@ public sealed partial class DashboardPage : Page
         UpdateHeaderLayout(width);
 
         SetStatColumns(narrow ? 2 : compact ? 3 : 6);
-        SetGridLayout(WorkGrid, narrow ? 1 : 2, narrow ? 2 : 1);
-        SetGridLayout(StatusGrid, narrow ? 1 : compact ? 2 : 4, narrow ? 4 : compact ? 2 : 1);
-        SetGridLayout(BottomGrid, narrow ? 1 : 2, narrow ? 2 : 1);
+        GridLayoutHelper.SetLayout(WorkGrid, narrow ? 1 : 2, narrow ? 2 : 1);
+        GridLayoutHelper.SetLayout(StatusGrid, narrow ? 1 : compact ? 2 : 4, narrow ? 4 : compact ? 2 : 1);
+        GridLayoutHelper.SetLayout(BottomGrid, narrow ? 1 : 2, narrow ? 2 : 1);
 
-        SetGridPosition(ShipmentCard, 0, 0);
-        SetGridPosition(AlertCard, narrow ? 1 : 0, narrow ? 0 : 1);
-        SetGridPosition(ConnectionCard, 0, 0);
-        SetGridPosition(ActivityCard, narrow ? 1 : 0, narrow ? 0 : 1);
+        GridLayoutHelper.SetPosition(ShipmentCard, 0, 0);
+        GridLayoutHelper.SetPosition(AlertCard, narrow ? 1 : 0, narrow ? 0 : 1);
+        GridLayoutHelper.SetPosition(ConnectionCard, 0, 0);
+        GridLayoutHelper.SetPosition(ActivityCard, narrow ? 1 : 0, narrow ? 0 : 1);
 
         var statusCards = new FrameworkElement[]
         {
@@ -44,7 +45,7 @@ public sealed partial class DashboardPage : Page
             (FrameworkElement)StatusGrid.Children[3]
         };
         for (var i = 0; i < statusCards.Length; i++)
-            SetGridPosition(statusCards[i], narrow ? i : i / (compact ? 2 : 4), narrow ? 0 : i % (compact ? 2 : 4));
+            GridLayoutHelper.SetPosition(statusCards[i], narrow ? i : i / (compact ? 2 : 4), narrow ? 0 : i % (compact ? 2 : 4));
     }
 
     private void UpdateHeaderLayout(double width)
@@ -85,38 +86,12 @@ public sealed partial class DashboardPage : Page
         // Chia sáu thẻ thống kê thành số cột phù hợp và tính số hàng cần thiết.
         var cards = new[] { StatCard1, StatCard2, StatCard3, StatCard4, StatCard5, StatCard6 };
         var rows = (cards.Length + count - 1) / count;
-        SetColumns(DashboardRowGrid(), count, rows);
+        GridLayoutHelper.SetLayout(DashboardRowGrid(), count, rows);
         for (var i = 0; i < cards.Length; i++)
-            SetGridPosition(cards[i], i / count, i % count);
+            GridLayoutHelper.SetPosition(cards[i], i / count, i % count);
     }
 
     private Grid DashboardRowGrid() => (Grid)StatCard1.Parent;
-
-    private static void SetGridLayout(Grid grid, int columns, int rows)
-    {
-        // Dựng lại định nghĩa hàng/cột vì số cột thay đổi theo kích thước cửa sổ.
-        grid.ColumnDefinitions.Clear();
-        for (var i = 0; i < columns; i++)
-            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-        grid.RowDefinitions.Clear();
-        for (var i = 0; i < rows; i++)
-            grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-    }
-
-    private static void SetColumns(Grid grid, int count, int rows)
-    {
-        SetGridLayout(grid, count, rows);
-        grid.RowDefinitions.Clear();
-        for (var i = 0; i < rows; i++)
-            grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-    }
-
-    private static void SetGridPosition(FrameworkElement element, int row, int column)
-    {
-        Grid.SetRow(element, row);
-        Grid.SetColumn(element, column);
-        Grid.SetColumnSpan(element, 1);
-    }
 
     private void PeriodFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
