@@ -1,5 +1,6 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 
 namespace NxAutoAio.WinUI;
 
@@ -38,27 +39,16 @@ public sealed partial class MainWindow : Window
     private void UpdateThemeButtonLayout()
     {
         var compact = MainNavigation.DisplayMode != NavigationViewDisplayMode.Expanded;
-        ThemeLabel.Visibility = compact ? Visibility.Collapsed : Visibility.Visible;
-        ThemeButton.HorizontalAlignment = compact
-            ? HorizontalAlignment.Center
-            : HorizontalAlignment.Stretch;
-        ThemeContent.Width = compact ? 20 : 160;
-        ThemeContent.Height = 28;
-        ThemeIcon.HorizontalAlignment = HorizontalAlignment.Center;
-        ThemeIcon.Margin = compact ? new Thickness(0) : new Thickness(0);
-        ThemeLabel.Margin = compact ? new Thickness(0) : new Thickness(32, 0, 0, 0);
-        ThemeButton.Width = compact ? 40 : double.NaN;
-        ThemeButton.Margin = compact ? new Thickness(2, 8, 2, 8) : new Thickness(12, 8, 12, 8);
-        ThemeButton.Padding = compact ? new Thickness(0, 0, 0, 0) : new Thickness(12, 8, 12, 8);
+        ThemeFooterItem.IsHitTestVisible = true;
     }
 
     private void SyncThemeState()
     {
         _darkTheme = RootGrid.ActualTheme == ElementTheme.Dark;
         ThemeIcon.Glyph = _darkTheme ? "\uE708" : "\uE706";
-        ThemeLabel.Text = _darkTheme ? "Giao diện sáng" : "Giao diện tối";
+        ThemeFooterItem.Content = _darkTheme ? "Giao diện sáng" : "Giao diện tối";
         ToolTipService.SetToolTip(
-            ThemeButton,
+            ThemeFooterItem,
             _darkTheme ? "Chuyển sang giao diện sáng" : "Chuyển sang giao diện tối");
     }
 
@@ -86,12 +76,23 @@ public sealed partial class MainWindow : Window
 
     private void ThemeButton_Click(object sender, RoutedEventArgs e)
     {
+        ToggleTheme();
+    }
+
+    private void ThemeFooterItem_Tapped(object sender, TappedRoutedEventArgs e)
+    {
+        ToggleTheme();
+        e.Handled = true;
+    }
+
+    private void ToggleTheme()
+    {
         _darkTheme = !_darkTheme;
         RootGrid.RequestedTheme = _darkTheme ? ElementTheme.Dark : ElementTheme.Light;
         ThemeIcon.Glyph = _darkTheme ? "\uE708" : "\uE706";
-        ThemeLabel.Text = _darkTheme ? "Giao diện sáng" : "Giao diện tối";
+        ThemeFooterItem.Content = _darkTheme ? "Giao diện sáng" : "Giao diện tối";
         ToolTipService.SetToolTip(
-            ThemeButton,
+            ThemeFooterItem,
             _darkTheme ? "Chuyển sang giao diện sáng" : "Chuyển sang giao diện tối");
     }
 }

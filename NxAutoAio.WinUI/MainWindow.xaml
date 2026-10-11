@@ -67,31 +67,14 @@
                 </controls:NavigationViewItem>
             </controls:NavigationView.MenuItems>
             <controls:NavigationView.PaneFooter>
-                <Button x:Name="ThemeButton"
-                        HorizontalAlignment="Stretch"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        Margin="12,8"
-                        Padding="12,8"
-                        ToolTipService.ToolTip="Chuyển giao diện sáng/tối"
-                        Click="ThemeButton_Click">
-                    <Grid x:Name="ThemeContent"
-                          HorizontalAlignment="Center"
-                          Width="160"
-                          Height="28">
-                        <FontIcon x:Name="ThemeIcon"
-                                  Glyph="&#xE706;"
-                                  FontSize="18"
-                                  Width="20"
-                                  Height="20"
-                                  HorizontalAlignment="Left"
-                                  VerticalAlignment="Center" />
-                        <TextBlock x:Name="ThemeLabel"
-                                   Text="Giao diện tối"
-                                   Margin="32,0,0,0"
-                                   VerticalAlignment="Center" />
-                    </Grid>
-                </Button>
+                <controls:NavigationViewItem x:Name="ThemeFooterItem"
+                                             Content="Giao diện tối"
+                                             ToolTipService.ToolTip="Chuyển giao diện sáng/tối"
+                                             Tapped="ThemeFooterItem_Tapped">
+                    <controls:NavigationViewItem.Icon>
+                        <FontIcon x:Name="ThemeIcon" Glyph="&#xE706;" />
+                    </controls:NavigationViewItem.Icon>
+                </controls:NavigationViewItem>
             </controls:NavigationView.PaneFooter>
             <Frame x:Name="ContentFrame" IsNavigationStackEnabled="False" />
         </controls:NavigationView>
