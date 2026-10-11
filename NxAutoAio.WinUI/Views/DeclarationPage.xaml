@@ -86,7 +86,17 @@
                                 <TextBlock Text="Trang" Grid.Column="4" /><TextBlock Text="Mã vạch" Grid.Column="5" />
                                 <TextBlock Text="Trạng thái" Grid.Column="6" /><TextBlock Text="Cập nhật" Grid.Column="7" />
                             </Grid>
-                            <ListView x:Name="DocumentList" SelectionMode="None">
+                            <ListView x:Name="DocumentList"
+                                      SelectionMode="None"
+                                      HorizontalContentAlignment="Stretch">
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="ListViewItem">
+                                        <Setter Property="Padding" Value="0" />
+                                        <Setter Property="Margin" Value="0" />
+                                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                        <Setter Property="VerticalContentAlignment" Value="Center" />
+                                    </Style>
+                                </ListView.ItemContainerStyle>
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <Grid Padding="12,8" MinHeight="44">
