@@ -43,7 +43,7 @@ public sealed partial class DeclarationPage : Page
         if (narrow)
         {
             ContentGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-            ContentGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+            ContentGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
             ContentGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
             Grid.SetColumn(DocumentCard, 0); Grid.SetRow(DocumentCard, 0);
             Grid.SetColumn(OptionsCard, 0); Grid.SetRow(OptionsCard, 1);
@@ -59,7 +59,7 @@ public sealed partial class DeclarationPage : Page
         {
             ContentGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             ContentGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(300) });
-            ContentGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+            ContentGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
             Grid.SetColumn(DocumentCard, 0); Grid.SetRow(DocumentCard, 0);
             Grid.SetColumn(OptionsCard, 1); Grid.SetRow(OptionsCard, 0);
             FilterGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
