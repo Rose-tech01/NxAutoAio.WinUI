@@ -33,7 +33,6 @@
                 <Grid Margin="0,8,24,8">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <AutoSuggestBox x:Name="SettingsSearchBox"
                         PlaceholderText="Tìm kiếm cài đặt..."
@@ -41,15 +40,6 @@
                         MinWidth="180"
                         Margin="0,0,12,0"
                         HorizontalAlignment="Stretch" />
-                    <Button x:Name="ThemeButton"
-                            Grid.Column="1"
-                            Width="42"
-                            Height="42"
-                            Padding="0"
-                            ToolTipService.ToolTip="Chuyển giao diện sáng/tối"
-                            Click="ThemeButton_Click">
-                        <FontIcon x:Name="ThemeIcon" Glyph="&#xE706;" FontSize="18" />
-                    </Button>
                 </Grid>
             </controls:NavigationView.Header>
             <controls:NavigationView.MenuItems>
@@ -75,6 +65,21 @@
                     <controls:NavigationViewItem.Icon><SymbolIcon Symbol="ContactInfo" /></controls:NavigationViewItem.Icon>
                 </controls:NavigationViewItem>
             </controls:NavigationView.MenuItems>
+            <controls:NavigationView.PaneFooter>
+                <Button x:Name="ThemeButton"
+                        HorizontalAlignment="Stretch"
+                        Margin="12,8"
+                        Padding="12,8"
+                        ToolTipService.ToolTip="Chuyển giao diện sáng/tối"
+                        Click="ThemeButton_Click">
+                    <StackPanel Orientation="Horizontal" Spacing="12">
+                        <FontIcon x:Name="ThemeIcon" Glyph="&#xE706;" FontSize="18" />
+                        <TextBlock x:Name="ThemeLabel"
+                                   Text="Giao diện tối"
+                                   VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button>
+            </controls:NavigationView.PaneFooter>
             <Frame x:Name="ContentFrame" IsNavigationStackEnabled="False" />
         </controls:NavigationView>
     </Grid>

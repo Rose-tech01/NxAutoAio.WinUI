@@ -31,6 +31,7 @@ public sealed partial class MainWindow : Window
     {
         _darkTheme = RootGrid.ActualTheme == ElementTheme.Dark;
         ThemeIcon.Glyph = _darkTheme ? "\uE708" : "\uE706";
+        ThemeLabel.Text = _darkTheme ? "Giao diện sáng" : "Giao diện tối";
         ToolTipService.SetToolTip(
             ThemeButton,
             _darkTheme ? "Chuyển sang giao diện sáng" : "Chuyển sang giao diện tối");
@@ -63,6 +64,7 @@ public sealed partial class MainWindow : Window
         _darkTheme = !_darkTheme;
         RootGrid.RequestedTheme = _darkTheme ? ElementTheme.Dark : ElementTheme.Light;
         ThemeIcon.Glyph = _darkTheme ? "\uE708" : "\uE706";
+        ThemeLabel.Text = _darkTheme ? "Giao diện sáng" : "Giao diện tối";
         ToolTipService.SetToolTip(
             ThemeButton,
             _darkTheme ? "Chuyển sang giao diện sáng" : "Chuyển sang giao diện tối");
