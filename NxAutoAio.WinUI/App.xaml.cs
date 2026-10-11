@@ -22,15 +22,15 @@ using Windows.Foundation.Collections;
 namespace NxAutoAio.WinUI
 {
     /// <summary>
-    /// Provides application-specific behavior to supplement the default Application class.
+    /// Quản lý vòng đời ứng dụng và tạo cửa sổ chính khi ứng dụng được mở.
     /// </summary>
     public partial class App : Application
     {
+        // Giữ tham chiếu để cửa sổ chính tồn tại trong suốt vòng đời ứng dụng.
         private Window? _window;
 
         /// <summary>
-        /// Initializes the singleton application object.  This is the first line of authored code
-        /// executed, and as such is the logical equivalent of main() or WinMain().
+        /// Khởi tạo tài nguyên XAML của ứng dụng trước khi xử lý sự kiện khởi chạy.
         /// </summary>
         public App()
         {
@@ -38,9 +38,9 @@ namespace NxAutoAio.WinUI
         }
 
         /// <summary>
-        /// Invoked when the application is launched.
+        /// Tạo và hiển thị cửa sổ chính khi ứng dụng khởi chạy.
         /// </summary>
-        /// <param name="args">Details about the launch request and process.</param>
+        /// <param name="args">Thông tin về yêu cầu khởi chạy ứng dụng.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             _window = new MainWindow();

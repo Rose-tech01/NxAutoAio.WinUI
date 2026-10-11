@@ -13,12 +13,14 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
+        <!-- Tiêu đề và mục đích của trang quản lý/in tờ khai. -->
         <StackPanel>
             <TextBlock Text="In Tờ Khai" Style="{StaticResource PageTitleStyle}" />
             <TextBlock Text="Tìm kiếm, kiểm tra và xử lý tài liệu logistics hàng ngày."
                        Opacity="0.68" Margin="0,0,0,20" />
         </StackPanel>
 
+        <!-- Chọn thư mục nguồn và hiển thị đường dẫn/trạng thái quét. -->
         <Border Grid.Row="1" Style="{StaticResource CardStyle}" Padding="16">
             <Grid ColumnSpacing="10" RowSpacing="8">
                 <Grid.ColumnDefinitions>
@@ -35,6 +37,7 @@
             </Grid>
         </Border>
 
+        <!-- Tìm theo tên tệp hoặc mã vận đơn, đồng thời lọc theo trạng thái in. -->
         <Grid x:Name="FilterGrid" Grid.Row="2" ColumnSpacing="10" RowSpacing="8" Margin="0,0,0,12">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -55,6 +58,7 @@
                        TextTrimming="CharacterEllipsis" Opacity="0.7" />
         </Grid>
 
+        <!-- Bảng tệp và tùy chọn in; code-behind xếp chồng hai thẻ trên màn hình hẹp. -->
         <Grid x:Name="ContentGrid" Grid.Row="3" ColumnSpacing="16" RowSpacing="12">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -86,6 +90,7 @@
                                 <TextBlock Text="Trang" Grid.Column="4" /><TextBlock Text="Mã vạch" Grid.Column="5" />
                                 <TextBlock Text="Trạng thái" Grid.Column="6" /><TextBlock Text="Cập nhật" Grid.Column="7" />
                             </Grid>
+                            <!-- Mỗi dòng liên kết PrintDocumentModel, gồm checkbox IsSelected hai chiều. -->
                             <ListView x:Name="DocumentList"
                                       SelectionMode="None"
                                       HorizontalContentAlignment="Stretch">
@@ -127,6 +132,7 @@
                 </Grid>
             </Border>
 
+            <!-- Các tùy chọn máy in, định dạng, phạm vi trang và quy tắc bỏ qua tệp. -->
             <Border x:Name="OptionsCard" Grid.Column="1" Style="{StaticResource CardStyle}"
                     VerticalAlignment="Top" MinHeight="360">
                 <StackPanel Spacing="12">
@@ -155,6 +161,7 @@
             </Border>
         </Grid>
 
+        <!-- Thanh trạng thái tiến độ và thống kê kết quả của thao tác in. -->
         <Border Grid.Row="4" Style="{StaticResource CardStyle}" Padding="16" Margin="0,12,0,0">
             <Grid ColumnSpacing="12">
                 <Grid.ColumnDefinitions>

@@ -6,6 +6,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        <!-- Tiêu đề và các lệnh thao tác với nguồn dữ liệu AS400. -->
         <StackPanel>
             <TextBlock Text="Dữ liệu AS400" Style="{StaticResource PageTitleStyle}" />
             <TextBlock Text="Quản lý danh sách MAWB và HAWB" Opacity="0.68" />
@@ -15,9 +16,11 @@
             <Button Content="Lấy HAWB đã chọn" Style="{StaticResource ToolbarButtonStyle}" Click="LoadHawb_Click" />
             <Button Content="Làm mới" Style="{StaticResource ToolbarButtonStyle}" Click="Refresh_Click" />
         </StackPanel>
+        <!-- MAWB được chọn ở thẻ trái; các HAWB liên quan hiển thị ở thẻ phải. -->
         <Grid x:Name="DataGrid" Grid.Row="2" ColumnSpacing="16" RowSpacing="16">
             <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
             <Grid.RowDefinitions><RowDefinition Height="*" /></Grid.RowDefinitions>
+            <!-- Danh sách MAWB có ô tìm kiếm và trạng thái rỗng khi không có kết quả. -->
             <Border x:Name="MawbCard" Grid.Column="0" Style="{StaticResource CardStyle}" Padding="0">
                 <Grid>
                     <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="*" /></Grid.RowDefinitions>
@@ -50,6 +53,7 @@
                     </StackPanel>
                 </Grid>
             </Border>
+            <!-- Chi tiết HAWB chỉ hiện sau khi chọn một MAWB. -->
             <Border x:Name="HawbCard" Grid.Column="1" Style="{StaticResource CardStyle}" Padding="0">
                 <Grid>
                     <StackPanel x:Name="HawbEmptyState" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="8">

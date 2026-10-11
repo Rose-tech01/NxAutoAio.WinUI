@@ -10,6 +10,7 @@
     </Window.SystemBackdrop>
 
     <Grid x:Name="RootGrid">
+        <!-- NavigationView chứa danh mục tính năng, phần đầu trang và vùng hiển thị nội dung. -->
         <controls:NavigationView
             x:Name="MainNavigation"
             IsBackButtonVisible="Collapsed"
@@ -19,6 +20,7 @@
             DisplayModeChanged="MainNavigation_DisplayModeChanged"
             SelectionChanged="MainNavigation_SelectionChanged">
             <controls:NavigationView.PaneHeader>
+                <!-- Nhận diện ứng dụng ở đầu ngăn điều hướng. -->
                 <StackPanel Orientation="Horizontal" Spacing="12" Margin="12,4,12,16">
                     <Border Width="42" Height="42" CornerRadius="10" Background="{StaticResource AccentBrush}">
                         <TextBlock Text="NX" HorizontalAlignment="Center" VerticalAlignment="Center"
@@ -31,6 +33,7 @@
                 </StackPanel>
             </controls:NavigationView.PaneHeader>
             <controls:NavigationView.Header>
+                <!-- Thanh tìm kiếm đặt ở đầu vùng điều hướng. -->
                 <Grid Margin="0,8,24,8">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
@@ -44,6 +47,7 @@
                 </Grid>
             </controls:NavigationView.Header>
             <controls:NavigationView.MenuItems>
+                <!-- Tag được MainWindow.xaml.cs dùng để chọn trang cần điều hướng. -->
                 <controls:NavigationViewItem Content="Dashboard" Tag="Dashboard" ToolTipService.ToolTip="Dashboard tổng quan">
                     <controls:NavigationViewItem.Icon><SymbolIcon Symbol="Home" /></controls:NavigationViewItem.Icon>
                 </controls:NavigationViewItem>
@@ -67,6 +71,7 @@
                 </controls:NavigationViewItem>
             </controls:NavigationView.MenuItems>
             <controls:NavigationView.PaneFooter>
+                <!-- Nút chuyển theme được đặt cố định ở cuối ngăn điều hướng. -->
                 <controls:NavigationViewItem x:Name="ThemeFooterItem"
                                              Content="Giao diện tối"
                                              ToolTipService.ToolTip="Chuyển giao diện sáng/tối"
@@ -85,6 +90,7 @@
                     </controls:NavigationViewItem.Icon>
                 </controls:NavigationViewItem>
             </controls:NavigationView.PaneFooter>
+            <!-- Các trang được nạp vào Frame này khi người dùng chọn mục điều hướng. -->
             <Frame x:Name="ContentFrame" IsNavigationStackEnabled="False" />
         </controls:NavigationView>
     </Grid>

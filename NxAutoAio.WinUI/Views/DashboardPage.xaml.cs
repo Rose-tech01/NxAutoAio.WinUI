@@ -3,11 +3,15 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace NxAutoAio.WinUI.Views;
 
+/// <summary>
+/// Hiển thị số liệu tổng quan mẫu và tự sắp xếp các thẻ theo chiều rộng cửa sổ.
+/// </summary>
 public sealed partial class DashboardPage : Page
 {
     public DashboardPage()
     {
         InitializeComponent();
+        // Tính bố cục ban đầu sau khi giao diện biết được kích thước thực tế.
         Loaded += (_, _) => UpdateLayout(PageRoot.ActualWidth);
     }
 
@@ -16,6 +20,8 @@ public sealed partial class DashboardPage : Page
 
     private void UpdateLayout(double width)
     {
+        // Đây chỉ là logic bố cục; dữ liệu dashboard nên được nạp qua service backend riêng.
+        // Các ngưỡng chiều rộng quyết định số cột để thẻ không bị chật trên cửa sổ nhỏ.
         var narrow = width < 900;
         var compact = width < 1250;
         UpdateHeaderLayout(width);
@@ -43,6 +49,7 @@ public sealed partial class DashboardPage : Page
 
     private void UpdateHeaderLayout(double width)
     {
+        // Trên màn hình hẹp, đưa bộ lọc và nút làm mới xuống hàng dưới tiêu đề.
         var narrow = width < 700;
         HeaderGrid.RowDefinitions.Clear();
         HeaderGrid.ColumnDefinitions.Clear();
@@ -75,6 +82,7 @@ public sealed partial class DashboardPage : Page
 
     private void SetStatColumns(int count)
     {
+        // Chia sáu thẻ thống kê thành số cột phù hợp và tính số hàng cần thiết.
         var cards = new[] { StatCard1, StatCard2, StatCard3, StatCard4, StatCard5, StatCard6 };
         var rows = (cards.Length + count - 1) / count;
         SetColumns(DashboardRowGrid(), count, rows);
@@ -86,6 +94,7 @@ public sealed partial class DashboardPage : Page
 
     private static void SetGridLayout(Grid grid, int columns, int rows)
     {
+        // Dựng lại định nghĩa hàng/cột vì số cột thay đổi theo kích thước cửa sổ.
         grid.ColumnDefinitions.Clear();
         for (var i = 0; i < columns; i++)
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
@@ -112,11 +121,15 @@ public sealed partial class DashboardPage : Page
     private void PeriodFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (PeriodFilter.SelectedItem is ComboBoxItem item)
+        {
+            // Lưu khoảng thời gian đã chọn để backend có thể dùng khi truy vấn số liệu.
             PageRoot.Tag = item.Content?.ToString();
+        }
     }
 
     private void Refresh_Click(object sender, RoutedEventArgs e)
     {
+        // Hiện chỉ cập nhật dấu thời gian; cần thay bằng lệnh đồng bộ dashboard từ C++.
         PageRoot.Tag = "Đã làm mới lúc " + System.DateTime.Now.ToString("HH:mm:ss");
     }
 }
