@@ -16,35 +16,74 @@ public sealed partial class DashboardPage : Page
 
     private void UpdateLayout(double width)
     {
-        var compact = width < 980;
-        var narrow = width < 620;
-        var columnCount = narrow ? 1 : compact ? 2 : 4;
+        var narrow = width < 900;
+        var compact = width < 1250;
 
-        DashboardGrid.ColumnDefinitions.Clear();
-        for (var i = 0; i < columnCount; i++)
-            DashboardGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+        SetStatColumns(narrow ? 2 : compact ? 3 : 6);
+        SetGridLayout(WorkGrid, narrow ? 1 : 2, narrow ? 2 : 1);
+        SetGridLayout(StatusGrid, narrow ? 1 : compact ? 2 : 4, narrow ? 4 : compact ? 2 : 1);
+        SetGridLayout(BottomGrid, narrow ? 1 : 2, narrow ? 2 : 1);
 
-        DashboardGrid.RowDefinitions.Clear();
-        var statRows = narrow ? 4 : 2;
-        var totalRows = statRows + 1 + (narrow || compact ? 1 : 0);
-        for (var i = 0; i < totalRows; i++)
-            DashboardGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+        SetGridPosition(ShipmentCard, 0, 0);
+        SetGridPosition(AlertCard, narrow ? 1 : 0, narrow ? 0 : 1);
+        SetGridPosition(ConnectionCard, 0, 0);
+        SetGridPosition(ActivityCard, narrow ? 1 : 0, narrow ? 0 : 1);
 
-        SetPosition(StatCard1, 0, 0, 1);
-        SetPosition(StatCard2, narrow ? 1 : 0, narrow ? 0 : 1, 1);
-        SetPosition(StatCard3, narrow ? 2 : 1, narrow ? 0 : 0, 1);
-        SetPosition(StatCard4, narrow ? 3 : 1, narrow ? 0 : 1, 1);
-
-        var bottomRow = statRows;
-        SetPosition(ShipmentCard, bottomRow, 0, columnCount);
-        SetPosition(ProgressCard, narrow ? bottomRow + 1 : bottomRow, narrow ? 0 : compact ? 0 : 2,
-            narrow ? 1 : compact ? columnCount : 2);
+        var statusCards = new FrameworkElement[]
+        {
+            (FrameworkElement)StatusGrid.Children[0],
+            (FrameworkElement)StatusGrid.Children[1],
+            (FrameworkElement)StatusGrid.Children[2],
+            (FrameworkElement)StatusGrid.Children[3]
+        };
+        for (var i = 0; i < statusCards.Length; i++)
+            SetGridPosition(statusCards[i], narrow ? i : i / (compact ? 2 : 4), narrow ? 0 : i % (compact ? 2 : 4));
     }
 
-    private static void SetPosition(FrameworkElement element, int row, int column, int columnSpan)
+    private void SetStatColumns(int count)
+    {
+        var cards = new[] { StatCard1, StatCard2, StatCard3, StatCard4, StatCard5, StatCard6 };
+        var rows = (cards.Length + count - 1) / count;
+        SetColumns(DashboardRowGrid(), count, rows);
+        for (var i = 0; i < cards.Length; i++)
+            SetGridPosition(cards[i], i / count, i % count);
+    }
+
+    private Grid DashboardRowGrid() => (Grid)StatCard1.Parent;
+
+    private static void SetGridLayout(Grid grid, int columns, int rows)
+    {
+        grid.ColumnDefinitions.Clear();
+        for (var i = 0; i < columns; i++)
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+        grid.RowDefinitions.Clear();
+        for (var i = 0; i < rows; i++)
+            grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+    }
+
+    private static void SetColumns(Grid grid, int count, int rows)
+    {
+        SetGridLayout(grid, count, rows);
+        grid.RowDefinitions.Clear();
+        for (var i = 0; i < rows; i++)
+            grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+    }
+
+    private static void SetGridPosition(FrameworkElement element, int row, int column)
     {
         Grid.SetRow(element, row);
         Grid.SetColumn(element, column);
-        Grid.SetColumnSpan(element, columnSpan);
+        Grid.SetColumnSpan(element, 1);
+    }
+
+    private void PeriodFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (PeriodFilter.SelectedItem is ComboBoxItem item)
+            PageRoot.Tag = item.Content?.ToString();
+    }
+
+    private void Refresh_Click(object sender, RoutedEventArgs e)
+    {
+        PageRoot.Tag = "Đã làm mới lúc " + System.DateTime.Now.ToString("HH:mm:ss");
     }
 }

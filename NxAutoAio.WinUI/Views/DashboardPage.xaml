@@ -8,117 +8,207 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Text="Dashboard tổng quan" Style="{StaticResource PageTitleStyle}" />
-            <TextBlock Text="Theo dõi nhanh tình trạng xử lý hàng hóa và các dịch vụ logistics."
-                       Grid.Row="1"
-                       Opacity="0.68"
-                       Margin="0,0,0,24" />
 
-            <Grid x:Name="DashboardGrid" Grid.Row="2" ColumnSpacing="12" RowSpacing="12">
+            <Grid Grid.Row="0" ColumnSpacing="16">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
+                <StackPanel>
+                    <TextBlock Text="Dashboard tổng quan" Style="{StaticResource PageTitleStyle}" />
+                    <TextBlock Text="Theo dõi tình trạng xử lý hàng hóa và dịch vụ logistics."
+                               Opacity="0.68" />
+                </StackPanel>
+                <ComboBox x:Name="PeriodFilter" Grid.Column="1" Width="150" SelectedIndex="0"
+                          SelectionChanged="PeriodFilter_SelectionChanged">
+                    <ComboBoxItem Content="Hôm nay" />
+                    <ComboBoxItem Content="Hôm qua" />
+                    <ComboBoxItem Content="7 ngày gần nhất" />
+                    <ComboBoxItem Content="Tháng này" />
+                </ComboBox>
+                <Button Grid.Column="2" Content="Làm mới" Style="{StaticResource ToolbarButtonStyle}"
+                        Click="Refresh_Click" />
+            </Grid>
 
-                <Border x:Name="StatCard1" Grid.Column="0" Style="{StaticResource CardStyle}" Padding="18">
-                    <StackPanel>
-                        <FontIcon Glyph="&#xE8B0;" FontSize="20" Foreground="{StaticResource AccentBrush}" />
-                        <TextBlock Text="MAWB hôm nay" Margin="0,14,0,2" Opacity="0.72" />
-                        <TextBlock Text="128" FontSize="28" FontWeight="SemiBold" />
+            <Grid Grid.Row="1" Margin="0,20,0,16" ColumnSpacing="12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" /><ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" /><ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" /><ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Border x:Name="StatCard1" Grid.Column="0" Style="{StaticResource CardStyle}" Padding="16">
+                    <StackPanel><FontIcon Glyph="&#xE8B0;" Foreground="{StaticResource AccentBrush}" />
+                        <TextBlock Text="MAWB hôm nay" Margin="0,10,0,2" Opacity="0.72" />
+                        <TextBlock Text="128" FontSize="26" FontWeight="SemiBold" />
                         <TextBlock Text="+12% so với hôm qua" FontSize="12" Opacity="0.68" />
                     </StackPanel>
                 </Border>
-                <Border x:Name="StatCard2" Grid.Column="1" Style="{StaticResource CardStyle}" Padding="18">
-                    <StackPanel>
-                        <FontIcon Glyph="&#xE8A7;" FontSize="20" Foreground="{StaticResource AccentBrush}" />
-                        <TextBlock Text="HAWB hôm nay" Margin="0,14,0,2" Opacity="0.72" />
-                        <TextBlock Text="486" FontSize="28" FontWeight="SemiBold" />
-                        <TextBlock Text="Trung bình 3.8 HAWB/MAWB" FontSize="12" Opacity="0.68" />
+                <Border x:Name="StatCard2" Grid.Column="1" Style="{StaticResource CardStyle}" Padding="16">
+                    <StackPanel><FontIcon Glyph="&#xE8A7;" Foreground="{StaticResource AccentBrush}" />
+                        <TextBlock Text="HAWB hôm nay" Margin="0,10,0,2" Opacity="0.72" />
+                        <TextBlock Text="486" FontSize="26" FontWeight="SemiBold" />
+                        <TextBlock Text="3.8 HAWB / MAWB" FontSize="12" Opacity="0.68" />
                     </StackPanel>
                 </Border>
-                <Border x:Name="StatCard3" Grid.Column="2" Style="{StaticResource CardStyle}" Padding="18">
-                    <StackPanel>
-                        <FontIcon Glyph="&#xE916;" FontSize="20" Foreground="#D99A00" />
-                        <TextBlock Text="Đang chờ xử lý" Margin="0,14,0,2" Opacity="0.72" />
-                        <TextBlock Text="24" FontSize="28" FontWeight="SemiBold" />
-                        <TextBlock Text="Cần được kiểm tra" FontSize="12" Opacity="0.68" />
+                <Border x:Name="StatCard3" Grid.Column="2" Style="{StaticResource CardStyle}" Padding="16">
+                    <StackPanel><FontIcon Glyph="&#xE916;" Foreground="#D99A00" />
+                        <TextBlock Text="Chờ xử lý" Margin="0,10,0,2" Opacity="0.72" />
+                        <TextBlock Text="24" FontSize="26" FontWeight="SemiBold" />
+                        <TextBlock Text="Cần kiểm tra" FontSize="12" Opacity="0.68" />
                     </StackPanel>
                 </Border>
-                <Border x:Name="StatCard4" Grid.Column="3" Style="{StaticResource CardStyle}" Padding="18">
-                    <StackPanel>
-                        <FontIcon Glyph="&#xE73E;" FontSize="20" Foreground="#D13438" />
-                        <TextBlock Text="Lỗi cần xử lý" Margin="0,14,0,2" Opacity="0.72" />
-                        <TextBlock Text="5" FontSize="28" FontWeight="SemiBold" />
+                <Border x:Name="StatCard4" Grid.Column="3" Style="{StaticResource CardStyle}" Padding="16">
+                    <StackPanel><FontIcon Glyph="&#xE73E;" Foreground="#D13438" />
+                        <TextBlock Text="Lỗi cần xử lý" Margin="0,10,0,2" Opacity="0.72" />
+                        <TextBlock Text="5" FontSize="26" FontWeight="SemiBold" />
                         <TextBlock Text="2 lỗi mức độ cao" FontSize="12" Opacity="0.68" />
                     </StackPanel>
                 </Border>
-
-                <Border x:Name="ShipmentCard" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource CardStyle}">
-                    <StackPanel>
-                        <TextBlock Text="Lô hàng cần xử lý" Style="{StaticResource SectionTitleStyle}" />
-                        <Grid ColumnSpacing="12" Margin="0,4,0,8">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="150" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="140" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="MAWB" Opacity="0.65" />
-                            <TextBlock Text="Trạng thái" Grid.Column="1" Opacity="0.65" />
-                            <TextBlock Text="Cập nhật" Grid.Column="2" Opacity="0.65" />
-                        </Grid>
-                        <Grid ColumnSpacing="12" Margin="0,8">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="150" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="140" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="738-12345678" />
-                            <TextBlock Text="Chờ tra thông quan" Grid.Column="1" Foreground="#D99A00" />
-                            <TextBlock Text="2 phút trước" Grid.Column="2" Opacity="0.68" />
-                        </Grid>
-                        <Grid ColumnSpacing="12" Margin="0,8">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="150" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="140" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="738-12345679" />
-                            <TextBlock Text="Thiếu dữ liệu HAWB" Grid.Column="1" Foreground="#D13438" />
-                            <TextBlock Text="8 phút trước" Grid.Column="2" Opacity="0.68" />
-                        </Grid>
-                        <Grid ColumnSpacing="12" Margin="0,8,0,0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="150" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="140" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="738-12345680" />
-                            <TextBlock Text="Đã thông quan" Grid.Column="1" Foreground="#107C10" />
-                            <TextBlock Text="15 phút trước" Grid.Column="2" Opacity="0.68" />
-                        </Grid>
+                <Border x:Name="StatCard5" Grid.Column="4" Style="{StaticResource CardStyle}" Padding="16">
+                    <StackPanel><FontIcon Glyph="&#xE73E;" Foreground="#107C10" />
+                        <TextBlock Text="Đã thông quan" Margin="0,10,0,2" Opacity="0.72" />
+                        <TextBlock Text="97" FontSize="26" FontWeight="SemiBold" />
+                        <TextBlock Text="76% tổng MAWB" FontSize="12" Opacity="0.68" />
                     </StackPanel>
                 </Border>
-
-                <Border x:Name="ProgressCard" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource CardStyle}">
-                    <StackPanel>
-                        <TextBlock Text="Tổng quan tiến trình" Style="{StaticResource SectionTitleStyle}" />
-                        <TextBlock Text="Đã thông quan" Margin="0,8,0,4" />
-                        <ProgressBar Value="76" Height="6" />
-                        <TextBlock Text="97 / 128 MAWB" FontSize="12" Opacity="0.68" Margin="0,4,0,12" />
-                        <TextBlock Text="Đã in tờ khai" Margin="0,4,0,4" />
-                        <ProgressBar Value="61" Height="6" />
-                        <TextBlock Text="78 / 128 MAWB" FontSize="12" Opacity="0.68" Margin="0,4,0,12" />
-                        <TextBlock Text="Đồng bộ AS400 gần nhất: 10:28:42" FontSize="12" Opacity="0.68" />
+                <Border x:Name="StatCard6" Grid.Column="5" Style="{StaticResource CardStyle}" Padding="16">
+                    <StackPanel><FontIcon Glyph="&#xE74E;" Foreground="#107C10" />
+                        <TextBlock Text="Đã in tờ khai" Margin="0,10,0,2" Opacity="0.72" />
+                        <TextBlock Text="78" FontSize="26" FontWeight="SemiBold" />
+                        <TextBlock Text="61% tổng MAWB" FontSize="12" Opacity="0.68" />
                     </StackPanel>
                 </Border>
             </Grid>
+
+            <Grid x:Name="WorkGrid" Grid.Row="2" ColumnSpacing="16" RowSpacing="12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" /><ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Border x:Name="ShipmentCard" Style="{StaticResource CardStyle}" Padding="16">
+                    <StackPanel>
+                        <Grid Margin="0,0,0,10">
+                            <TextBlock Text="Lô hàng cần xử lý" Style="{StaticResource SectionTitleStyle}" />
+                            <Button Content="Xem tất cả" HorizontalAlignment="Right"
+                                    Style="{StaticResource ToolbarButtonStyle}" Padding="10,0" />
+                        </Grid>
+                        <Grid ColumnSpacing="12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150" /><ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="120" /><ColumnDefinition Width="90" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="MAWB" Opacity="0.65" />
+                            <TextBlock Text="Vấn đề / trạng thái" Grid.Column="1" Opacity="0.65" />
+                            <TextBlock Text="Mức độ" Grid.Column="2" Opacity="0.65" />
+                            <TextBlock Text="Chờ" Grid.Column="3" Opacity="0.65" />
+                        </Grid>
+                        <Grid ColumnSpacing="12" Margin="0,12,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150" /><ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="120" /><ColumnDefinition Width="90" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="738-12345678" />
+                            <TextBlock Text="Chờ tra thông quan" Grid.Column="1" Foreground="#D99A00" />
+                            <TextBlock Text="Cao" Grid.Column="2" Foreground="#D13438" />
+                            <TextBlock Text="2 phút" Grid.Column="3" Opacity="0.7" />
+                        </Grid>
+                        <Grid ColumnSpacing="12" Margin="0,10,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150" /><ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="120" /><ColumnDefinition Width="90" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="738-12345679" />
+                            <TextBlock Text="Thiếu dữ liệu HAWB" Grid.Column="1" Foreground="#D13438" />
+                            <TextBlock Text="Cao" Grid.Column="2" Foreground="#D13438" />
+                            <TextBlock Text="8 phút" Grid.Column="3" Opacity="0.7" />
+                        </Grid>
+                        <Grid ColumnSpacing="12" Margin="0,10,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150" /><ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="120" /><ColumnDefinition Width="90" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="738-12345680" />
+                            <TextBlock Text="Đã thông quan" Grid.Column="1" Foreground="#107C10" />
+                            <TextBlock Text="Thông tin" Grid.Column="2" Foreground="#107C10" />
+                            <TextBlock Text="15 phút" Grid.Column="3" Opacity="0.7" />
+                        </Grid>
+                    </StackPanel>
+                </Border>
+                <Border x:Name="AlertCard" Grid.Column="1" Style="{StaticResource CardStyle}" Padding="16">
+                    <StackPanel>
+                        <TextBlock Text="Cảnh báo" Style="{StaticResource SectionTitleStyle}" />
+                        <TextBlock Text="●  2 MAWB thiếu HAWB" Foreground="#D13438" Margin="0,8,0,0" />
+                        <TextBlock Text="●  3 file thiếu mã vạch" Foreground="#D99A00" Margin="0,10,0,0" />
+                        <TextBlock Text="●  AS400 chưa đồng bộ" Foreground="#D99A00" Margin="0,10,0,0" />
+                        <TextBlock Text="●  Máy in sẵn sàng" Foreground="#107C10" Margin="0,10,0,0" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <Grid x:Name="StatusGrid" Grid.Row="3" ColumnSpacing="16" RowSpacing="12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" /><ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" /><ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Border Style="{StaticResource CardStyle}" Padding="16">
+                    <StackPanel><TextBlock Text="Thông quan" Style="{StaticResource SectionTitleStyle}" />
+                        <ProgressBar Value="76" Height="6" /><TextBlock Text="97 / 128 MAWB"
+                            FontSize="12" Opacity="0.68" Margin="0,6,0,0" />
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="1" Style="{StaticResource CardStyle}" Padding="16">
+                    <StackPanel><TextBlock Text="In tờ khai" Style="{StaticResource SectionTitleStyle}" />
+                        <ProgressBar Value="61" Height="6" /><TextBlock Text="78 / 128 MAWB"
+                            FontSize="12" Opacity="0.68" Margin="0,6,0,0" />
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="2" Style="{StaticResource CardStyle}" Padding="16">
+                    <StackPanel><TextBlock Text="Tra phí lao vụ" Style="{StaticResource SectionTitleStyle}" />
+                        <ProgressBar Value="48" Height="6" /><TextBlock Text="61 / 128 MAWB"
+                            FontSize="12" Opacity="0.68" Margin="0,6,0,0" />
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="3" Style="{StaticResource CardStyle}" Padding="16">
+                    <StackPanel><TextBlock Text="Đồng bộ AS400" Style="{StaticResource SectionTitleStyle}" />
+                        <ProgressBar Value="88" Height="6" /><TextBlock Text="Cập nhật 10:28:42"
+                            FontSize="12" Opacity="0.68" Margin="0,6,0,0" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <Grid x:Name="BottomGrid" Grid.Row="4" ColumnSpacing="16" RowSpacing="12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" /><ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Border x:Name="ConnectionCard" Style="{StaticResource CardStyle}" Padding="16">
+                    <StackPanel><TextBlock Text="Kết nối hệ thống" Style="{StaticResource SectionTitleStyle}" />
+                        <Grid Margin="0,6,0,0"><TextBlock Text="AS400" /><TextBlock Text="● Đã kết nối"
+                            Grid.Column="1" HorizontalAlignment="Right" Foreground="#107C10" /></Grid>
+                        <Grid Margin="0,8,0,0"><TextBlock Text="TCS" /><TextBlock Text="● Hoạt động"
+                            Grid.Column="1" HorizontalAlignment="Right" Foreground="#107C10" /></Grid>
+                        <Grid Margin="0,8,0,0"><TextBlock Text="SCSC" /><TextBlock Text="● Chưa cấu hình"
+                            Grid.Column="1" HorizontalAlignment="Right" Foreground="#D99A00" /></Grid>
+                        <Grid Margin="0,8,0,0"><TextBlock Text="Máy in" /><TextBlock Text="● Sẵn sàng"
+                            Grid.Column="1" HorizontalAlignment="Right" Foreground="#107C10" /></Grid>
+                    </StackPanel>
+                </Border>
+                <Border x:Name="ActivityCard" Grid.Column="1" Style="{StaticResource CardStyle}" Padding="16">
+                    <StackPanel><TextBlock Text="Hoạt động gần đây" Style="{StaticResource SectionTitleStyle}" />
+                        <TextBlock Text="10:28  Nạp File List thành công" Margin="0,6,0,0" />
+                        <TextBlock Text="10:25  Tra thông quan 12 MAWB" Margin="0,8,0,0" />
+                        <TextBlock Text="10:20  Đã in 8 tờ khai" Margin="0,8,0,0" />
+                        <TextBlock Text="10:15  Đồng bộ AS400 hoàn tất" Margin="0,8,0,0" />
+                        <TextBlock Text="10:10  Có 2 file lỗi" Margin="0,8,0,0" Foreground="#D13438" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <TextBlock Grid.Row="5" Text="Dữ liệu mẫu • Đồng bộ gần nhất: 10:28:42"
+                       FontSize="12" Opacity="0.6" Margin="0,4,0,0" />
         </Grid>
     </ScrollViewer>
 </Page>
