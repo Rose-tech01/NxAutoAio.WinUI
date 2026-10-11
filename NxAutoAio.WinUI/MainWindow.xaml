@@ -35,10 +35,12 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <AutoSuggestBox
+                    <AutoSuggestBox x:Name="SettingsSearchBox"
                         PlaceholderText="Tìm kiếm cài đặt..."
                         MaxWidth="620"
-                        HorizontalAlignment="Left" />
+                        MinWidth="180"
+                        Margin="0,0,12,0"
+                        HorizontalAlignment="Stretch" />
                     <Button x:Name="ThemeButton"
                             Grid.Column="1"
                             Width="42"

@@ -25,11 +25,11 @@
             <Button x:Name="PrintButton" Grid.Column="3" Content="In Tờ Cần" Style="{StaticResource ToolbarButtonStyle}" Click="Action_Click" />
             <TextBlock x:Name="FileStatus" Text="Dữ liệu mẫu" VerticalAlignment="Center" Opacity="0.7" />
         </Grid>
-        <Grid Grid.Row="2" Margin="0,0,0,12" ColumnSpacing="12">
+        <Grid x:Name="FilterGrid" Grid.Row="2" Margin="0,0,0,12" ColumnSpacing="12" RowSpacing="8">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="220" />
-                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="120" />
             </Grid.ColumnDefinitions>
             <TextBox x:Name="SearchBox" PlaceholderText="Tìm kiếm MAWB..." TextChanged="SearchBox_TextChanged" />
             <ComboBox x:Name="StatusFilter" Grid.Column="1" SelectedIndex="0" SelectionChanged="StatusFilter_SelectionChanged">
@@ -38,7 +38,9 @@
                 <ComboBoxItem Content="Đang xử lý" Tag="Đang xử lý" />
                 <ComboBoxItem Content="Cần kiểm tra" Tag="Cần kiểm tra" />
             </ComboBox>
-            <TextBlock x:Name="SelectionStatus" Grid.Column="2" VerticalAlignment="Center" Opacity="0.7" />
+            <TextBlock x:Name="SelectionStatus" Grid.Column="2" Width="120"
+                       VerticalAlignment="Center" HorizontalAlignment="Left"
+                       TextTrimming="CharacterEllipsis" Opacity="0.7" />
         </Grid>
         <ScrollViewer Grid.Row="3" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
         <Border MinWidth="860" Style="{StaticResource CardStyle}" Padding="0">

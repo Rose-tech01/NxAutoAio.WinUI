@@ -24,10 +24,57 @@ public sealed partial class TcsPage : Page
         InitializeComponent();
         LoadRows();
         Loaded += (_, _) => UpdateLayout(PageRoot.ActualWidth);
+        Loaded += (_, _) => UpdateFilterLayout(PageRoot.ActualWidth);
     }
 
     private void PageRoot_SizeChanged(object sender, SizeChangedEventArgs e) =>
-        UpdateLayout(e.NewSize.Width);
+        UpdatePageSize(e.NewSize.Width);
+
+    private void UpdatePageSize(double width)
+    {
+        UpdateLayout(width);
+        UpdateFilterLayout(width);
+    }
+
+    private void UpdateFilterLayout(double width)
+    {
+        var narrow = width < 680;
+        FilterGrid.RowDefinitions.Clear();
+        FilterGrid.ColumnDefinitions.Clear();
+
+        if (narrow)
+        {
+            FilterGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            FilterGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            FilterGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            FilterGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(120) });
+
+            Grid.SetRow(SearchBox, 0);
+            Grid.SetColumn(SearchBox, 0);
+            Grid.SetColumnSpan(SearchBox, 2);
+            Grid.SetRow(StatusFilter, 1);
+            Grid.SetColumn(StatusFilter, 0);
+            Grid.SetColumnSpan(StatusFilter, 1);
+            Grid.SetRow(SelectionStatus, 1);
+            Grid.SetColumn(SelectionStatus, 1);
+        }
+        else
+        {
+            FilterGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            FilterGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            FilterGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(220) });
+            FilterGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(120) });
+
+            Grid.SetRow(SearchBox, 0);
+            Grid.SetColumn(SearchBox, 0);
+            Grid.SetColumnSpan(SearchBox, 1);
+            Grid.SetRow(StatusFilter, 0);
+            Grid.SetColumn(StatusFilter, 1);
+            Grid.SetColumnSpan(StatusFilter, 1);
+            Grid.SetRow(SelectionStatus, 0);
+            Grid.SetColumn(SelectionStatus, 2);
+        }
+    }
 
     private void UpdateLayout(double width)
     {
