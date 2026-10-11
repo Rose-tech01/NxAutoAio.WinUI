@@ -2,6 +2,8 @@ namespace NxAutoAio.WinUI.Models;
 
 public sealed class MawbModel
 {
+    // Model dùng chung cho danh sách MAWB ở màn hình TCS và AS400.
+    // Khi nối backend, nên giữ tên thuộc tính này ổn định để hạn chế sửa XAML.
     public int Index { get; init; }
     public string Number { get; init; } = string.Empty;
     public string Flight { get; init; } = string.Empty;

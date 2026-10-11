@@ -7,6 +7,8 @@ public sealed class PrintDocumentModel : INotifyPropertyChanged
 {
     private bool _isSelected;
 
+    // IsSelected được Binding với CheckBox trong bảng.
+    // Không nên cập nhật trực tiếp UI từ luồng C++; chỉ thay đổi model trên UI thread.
     public bool IsSelected
     {
         get => _isSelected;

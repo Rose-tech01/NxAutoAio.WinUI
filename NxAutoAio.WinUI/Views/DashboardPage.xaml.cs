@@ -16,6 +16,7 @@ public sealed partial class DashboardPage : Page
 
     private void UpdateLayout(double width)
     {
+        // Đây chỉ là logic bố cục; dữ liệu dashboard nên được nạp qua service backend riêng.
         var narrow = width < 900;
         var compact = width < 1250;
         UpdateHeaderLayout(width);
@@ -112,11 +113,15 @@ public sealed partial class DashboardPage : Page
     private void PeriodFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (PeriodFilter.SelectedItem is ComboBoxItem item)
+        {
+            // Backend có thể dùng giá trị này để truy vấn lại số liệu theo khoảng thời gian.
             PageRoot.Tag = item.Content?.ToString();
+        }
     }
 
     private void Refresh_Click(object sender, RoutedEventArgs e)
     {
+        // TODO(backend): thay thao tác mô phỏng bằng lệnh đồng bộ dashboard từ C++.
         PageRoot.Tag = "Đã làm mới lúc " + System.DateTime.Now.ToString("HH:mm:ss");
     }
 }

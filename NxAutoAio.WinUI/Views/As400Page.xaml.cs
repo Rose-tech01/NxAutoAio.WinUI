@@ -9,6 +9,7 @@ namespace NxAutoAio.WinUI.Views;
 
 public sealed partial class As400Page : Page
 {
+    // Dữ liệu mẫu mô phỏng kết quả đọc từ AS400.
     private readonly ObservableCollection<MawbModel> _mawbs = new()
     {
         new() { Number = "738-12345670", Destination = "HAN - Hà Nội", Packages = 12 },
@@ -66,6 +67,7 @@ public sealed partial class As400Page : Page
 
     private void MawbSearchBox_TextChanged(object sender, TextChangedEventArgs e)
     {
+        // Khi chuyển sang backend, nên lọc ở service nếu dữ liệu lớn thay vì tải toàn bộ về UI.
         var query = MawbSearchBox.Text.Trim();
         MawbList.ItemsSource = new ObservableCollection<MawbModel>(
             _mawbs.Where(item => item.Number.Contains(query, StringComparison.OrdinalIgnoreCase)));
@@ -89,18 +91,21 @@ public sealed partial class As400Page : Page
 
     private void LoadMawb_Click(object sender, RoutedEventArgs e)
     {
+        // TODO(backend): gọi lệnh đọc danh sách MAWB từ AS400.
         MawbList.ItemsSource = _mawbs;
         UpdateMawbState();
     }
 
     private void LoadHawb_Click(object sender, RoutedEventArgs e)
     {
+        // TODO(backend): lấy HAWB theo MAWB đang chọn rồi cập nhật HawbList.ItemsSource.
         if (MawbList.SelectedItem is MawbModel)
             MawbList_SelectionChanged(MawbList, null!);
     }
 
     private void Refresh_Click(object sender, RoutedEventArgs e)
     {
+        // TODO(backend): hủy dữ liệu cũ, gọi lại AS400 và báo lỗi rõ ràng nếu kết nối thất bại.
         MawbSearchBox.Text = string.Empty;
         MawbList.SelectedItem = null;
         MawbList.ItemsSource = _mawbs;

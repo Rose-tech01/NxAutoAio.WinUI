@@ -9,6 +9,7 @@ namespace NxAutoAio.WinUI.Views;
 
 public sealed partial class DeclarationPage : Page
 {
+    // Dữ liệu mẫu mô phỏng file tờ khai tìm thấy trong thư mục vận hành.
     private readonly ObservableCollection<PrintDocumentModel> _allDocuments = new()
     {
         new() { Index = 1, FileName = "declaration_738_12345670.xlsx", Mawb = "738-12345670", Hawb = "HWB-001", FileFormat = "Excel", PageCount = 4, BarcodeStatus = "Có", PrintStatus = "Chưa xử lý", LastUpdated = "Vừa xong" },
@@ -74,12 +75,17 @@ public sealed partial class DeclarationPage : Page
 
     private void ChooseFolder_Click(object sender, RoutedEventArgs e)
     {
+        // TODO(backend): mở FolderPicker, quét file và map kết quả vào PrintDocumentModel.
         FolderStatus.Text = @"C:\Logistics\ToKhai\2026-10-11";
         ToolTipService.SetToolTip(FolderStatus, FolderStatus.Text);
         ResultStatus.Text = $"{_allDocuments.Count} file";
     }
 
-    private void OpenFolder_Click(object sender, RoutedEventArgs e) => StatusText.Text = "Đã mô phỏng mở thư mục";
+    private void OpenFolder_Click(object sender, RoutedEventArgs e)
+    {
+        // TODO(backend): mở thư mục thật bằng launcher hoặc native C++.
+        StatusText.Text = "Đã mô phỏng mở thư mục";
+    }
     private void Refresh_Click(object sender, RoutedEventArgs e) { FolderStatus.Text = "Đã quét lại dữ liệu mẫu"; ApplyFilter(); }
     private void SearchBox_TextChanged(object sender, TextChangedEventArgs e) => ApplyFilter();
     private void StatusFilter_SelectionChanged(object sender, SelectionChangedEventArgs e) => ApplyFilter();
@@ -106,6 +112,7 @@ public sealed partial class DeclarationPage : Page
     {
         var selected = _allDocuments.Count(item => item.IsSelected);
         if (selected == 0) { StatusText.Text = "Hãy chọn ít nhất một tài liệu"; return; }
+        // TODO(backend): gửi các file đã chọn cho hàng đợi in và nhận tiến độ theo từng file.
         StatusText.Text = $"Đang mô phỏng in {selected} tài liệu";
         PrintProgress.Value = 35;
         StartButton.IsEnabled = false;

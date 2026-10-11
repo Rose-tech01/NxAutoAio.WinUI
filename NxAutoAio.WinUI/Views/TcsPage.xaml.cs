@@ -9,6 +9,7 @@ namespace NxAutoAio.WinUI.Views;
 
 public sealed partial class TcsPage : Page
 {
+    // Dữ liệu mẫu để dựng giao diện. Khi có backend, thay bằng TcsService.LoadAsync().
     private readonly ObservableCollection<MawbModel> _allItems = new()
     {
         new() { Index = 1, Number = "738-12345670", HawbCount = 4, TcsStatus = "Đã thông quan", Fee = "850.000 đ", PrintStatus = "Sẵn sàng" },
@@ -123,6 +124,7 @@ public sealed partial class TcsPage : Page
 
     private void Load_Click(object sender, RoutedEventArgs e)
     {
+        // TODO(backend): gọi API/C++ để nạp MAWB từ TCS hoặc nguồn dữ liệu trung gian.
         FileStatus.Text = $"{_allItems.Count} dòng dữ liệu mẫu đã nạp";
     }
 
@@ -162,6 +164,7 @@ public sealed partial class TcsPage : Page
     private void Action_Click(object sender, RoutedEventArgs e)
     {
         var selected = MawbList.SelectedItems.Count;
+        // TODO(backend): truyền danh sách MAWB đã chọn vào thao tác tra thông quan/tra phí/in.
         FileStatus.Text = selected > 0
             ? $"Đang mô phỏng thao tác cho {selected} MAWB"
             : "Hãy chọn ít nhất một MAWB để xử lý hàng loạt";
