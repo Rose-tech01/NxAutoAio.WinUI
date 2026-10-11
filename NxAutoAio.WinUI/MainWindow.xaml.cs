@@ -42,10 +42,11 @@ public sealed partial class MainWindow : Window
         ThemeButton.HorizontalAlignment = compact
             ? HorizontalAlignment.Center
             : HorizontalAlignment.Stretch;
-        ThemeContent.Orientation = Orientation.Horizontal;
-        ThemeContent.Spacing = compact ? 0 : 12;
-        ThemeContent.Width = compact ? 20 : double.NaN;
-        ThemeContent.Height = compact ? 20 : double.NaN;
+        ThemeContent.Width = compact ? 20 : 160;
+        ThemeContent.Height = 28;
+        ThemeIcon.HorizontalAlignment = HorizontalAlignment.Center;
+        ThemeIcon.Margin = compact ? new Thickness(0) : new Thickness(0);
+        ThemeLabel.Margin = compact ? new Thickness(0) : new Thickness(32, 0, 0, 0);
         ThemeButton.Width = compact ? 40 : double.NaN;
         ThemeButton.Margin = compact ? new Thickness(2, 8, 2, 8) : new Thickness(12, 8, 12, 8);
         ThemeButton.Padding = compact ? new Thickness(0, 0, 0, 0) : new Thickness(12, 8, 12, 8);

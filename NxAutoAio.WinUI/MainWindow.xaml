@@ -75,23 +75,22 @@
                         Padding="12,8"
                         ToolTipService.ToolTip="Chuyển giao diện sáng/tối"
                         Click="ThemeButton_Click">
-                    <StackPanel x:Name="ThemeContent"
-                                Orientation="Horizontal"
-                                HorizontalAlignment="Center"
-                                Width="20"
-                                Height="20"
-                                Spacing="12">
+                    <Grid x:Name="ThemeContent"
+                          HorizontalAlignment="Center"
+                          Width="160"
+                          Height="28">
                         <FontIcon x:Name="ThemeIcon"
                                   Glyph="&#xE706;"
                                   FontSize="18"
                                   Width="20"
                                   Height="20"
-                                  HorizontalAlignment="Center"
+                                  HorizontalAlignment="Left"
                                   VerticalAlignment="Center" />
                         <TextBlock x:Name="ThemeLabel"
                                    Text="Giao diện tối"
+                                   Margin="32,0,0,0"
                                    VerticalAlignment="Center" />
-                    </StackPanel>
+                    </Grid>
                 </Button>
             </controls:NavigationView.PaneFooter>
             <Frame x:Name="ContentFrame" IsNavigationStackEnabled="False" />
