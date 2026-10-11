@@ -75,9 +75,12 @@
                         <FontIcon x:Name="ThemeIcon"
                                   Glyph="&#xE706;"
                                   FontFamily="Segoe Fluent Icons"
-                                  FontSize="16"
+                                  FontSize="14"
                                   FontWeight="SemiBold"
-                                  HorizontalAlignment="Center"
+                                  Width="16"
+                                  Height="16"
+                                  Margin="-4,0,0,0"
+                                  HorizontalAlignment="Left"
                                   VerticalAlignment="Center" />
                     </controls:NavigationViewItem.Icon>
                 </controls:NavigationViewItem>

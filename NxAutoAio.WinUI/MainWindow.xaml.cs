@@ -46,8 +46,8 @@ public sealed partial class MainWindow : Window
     {
         _darkTheme = RootGrid.ActualTheme == ElementTheme.Dark;
         ThemeIcon.Glyph = _darkTheme ? "\uE706" : "\uE708";
-        ThemeIcon.FontSize = _darkTheme ? 16 : 14;
-        ThemeIcon.Margin = _darkTheme ? new Thickness(0) : new Thickness(-2, 0, 0, 0);
+        ThemeIcon.FontSize = 14;
+        ThemeIcon.Margin = new Thickness(-4, 0, 0, 0);
         ThemeFooterItem.Content = _darkTheme ? "Giao diện sáng" : "Giao diện tối";
         ToolTipService.SetToolTip(
             ThemeFooterItem,
@@ -92,8 +92,8 @@ public sealed partial class MainWindow : Window
         _darkTheme = !_darkTheme;
         RootGrid.RequestedTheme = _darkTheme ? ElementTheme.Dark : ElementTheme.Light;
         ThemeIcon.Glyph = _darkTheme ? "\uE706" : "\uE708";
-        ThemeIcon.FontSize = _darkTheme ? 16 : 14;
-        ThemeIcon.Margin = _darkTheme ? new Thickness(0) : new Thickness(-2, 0, 0, 0);
+        ThemeIcon.FontSize = 14;
+        ThemeIcon.Margin = new Thickness(-4, 0, 0, 0);
         ThemeFooterItem.Content = _darkTheme ? "Giao diện sáng" : "Giao diện tối";
         ToolTipService.SetToolTip(
             ThemeFooterItem,
