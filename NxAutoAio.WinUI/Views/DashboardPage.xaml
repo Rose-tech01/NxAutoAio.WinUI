@@ -26,12 +26,14 @@
                     <TextBlock Text="Theo dõi tình trạng xử lý hàng hóa và dịch vụ logistics."
                                Opacity="0.68" />
                 </StackPanel>
-                <Grid x:Name="HeaderActions" Grid.Column="1" ColumnSpacing="10">
+                <Grid x:Name="HeaderActions" Grid.Column="1" ColumnSpacing="10"
+                      VerticalAlignment="Center">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="150" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <ComboBox x:Name="PeriodFilter" Width="150" SelectedIndex="0"
+                    <ComboBox x:Name="PeriodFilter" Width="150" Height="38"
+                              VerticalAlignment="Center" SelectedIndex="0"
                               SelectionChanged="PeriodFilter_SelectionChanged">
                         <ComboBoxItem Content="Hôm nay" />
                         <ComboBoxItem Content="Hôm qua" />
@@ -39,6 +41,7 @@
                         <ComboBoxItem Content="Tháng này" />
                     </ComboBox>
                     <Button x:Name="RefreshButton" Grid.Column="1" Content="Làm mới"
+                            Height="38" Margin="0" VerticalAlignment="Center"
                             Style="{StaticResource ToolbarButtonStyle}"
                             Click="Refresh_Click" />
                 </Grid>
