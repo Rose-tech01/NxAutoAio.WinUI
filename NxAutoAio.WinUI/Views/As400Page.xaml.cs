@@ -3,6 +3,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using NxAutoAio.WinUI.Constants;
+using NxAutoAio.WinUI.Data;
+using NxAutoAio.WinUI.Helpers;
 using NxAutoAio.WinUI.Models;
 
 namespace NxAutoAio.WinUI.Views;
@@ -13,22 +16,10 @@ namespace NxAutoAio.WinUI.Views;
 public sealed partial class As400Page : Page
 {
     // Danh sách MAWB mẫu; khi tích hợp, danh sách này sẽ đến từ truy vấn AS400.
-    private readonly ObservableCollection<MawbModel> _mawbs = new()
-    {
-        new() { Number = "738-12345670", Destination = "HAN - Hà Nội", Packages = 12 },
-        new() { Number = "738-12345681", Destination = "SGN - Hồ Chí Minh", Packages = 8 },
-        new() { Number = "738-12345692", Destination = "DAD - Đà Nẵng", Packages = 21 },
-        new() { Number = "738-12345703", Destination = "HAN - Hà Nội", Packages = 5 },
-        new() { Number = "738-12345714", Destination = "SGN - Hồ Chí Minh", Packages = 16 }
-    };
+    private readonly ObservableCollection<MawbModel> _mawbs = SampleDataFactory.CreateAs400Mawbs();
 
     // Danh sách HAWB mẫu hiện dùng chung để minh họa nội dung sau khi chọn một MAWB.
-    private readonly ObservableCollection<HawbModel> _hawbs = new()
-    {
-        new() { Number = "HWB-001", Consignee = "Công ty Minh Long", Packages = 4 },
-        new() { Number = "HWB-002", Consignee = "Công ty Á Châu", Packages = 8 },
-        new() { Number = "HWB-003", Consignee = "Công ty Tân Tiến", Packages = 3 }
-    };
+    private readonly ObservableCollection<HawbModel> _hawbs = SampleDataFactory.CreateAs400Hawbs();
 
     public As400Page()
     {
@@ -45,7 +36,7 @@ public sealed partial class As400Page : Page
     private void UpdateLayout(double width)
     {
         // Hiển thị hai thẻ cạnh nhau trên màn hình rộng, xếp chồng khi màn hình hẹp.
-        var narrow = width < 820;
+        var narrow = width < ResponsiveBreakpoints.As400Narrow;
         DataGrid.ColumnDefinitions.Clear();
         DataGrid.RowDefinitions.Clear();
 
@@ -54,20 +45,16 @@ public sealed partial class As400Page : Page
             DataGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             DataGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
             DataGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-            Grid.SetColumn(MawbCard, 0);
-            Grid.SetRow(MawbCard, 0);
-            Grid.SetColumn(HawbCard, 0);
-            Grid.SetRow(HawbCard, 1);
+            GridLayoutHelper.SetPosition(MawbCard, 0, 0);
+            GridLayoutHelper.SetPosition(HawbCard, 1, 0);
         }
         else
         {
             DataGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             DataGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             DataGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-            Grid.SetColumn(MawbCard, 0);
-            Grid.SetRow(MawbCard, 0);
-            Grid.SetColumn(HawbCard, 1);
-            Grid.SetRow(HawbCard, 0);
+            GridLayoutHelper.SetPosition(MawbCard, 0, 0);
+            GridLayoutHelper.SetPosition(HawbCard, 0, 1);
         }
     }
 

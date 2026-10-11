@@ -1,5 +1,6 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using NxAutoAio.WinUI.Constants;
 using NxAutoAio.WinUI.Helpers;
 
 namespace NxAutoAio.WinUI.Views;
@@ -23,8 +24,8 @@ public sealed partial class DashboardPage : Page
     {
         // Đây chỉ là logic bố cục; dữ liệu dashboard nên được nạp qua service backend riêng.
         // Các ngưỡng chiều rộng quyết định số cột để thẻ không bị chật trên cửa sổ nhỏ.
-        var narrow = width < 900;
-        var compact = width < 1250;
+        var narrow = width < ResponsiveBreakpoints.DashboardNarrow;
+        var compact = width < ResponsiveBreakpoints.DashboardCompact;
         UpdateHeaderLayout(width);
 
         SetStatColumns(narrow ? 2 : compact ? 3 : 6);
@@ -51,7 +52,7 @@ public sealed partial class DashboardPage : Page
     private void UpdateHeaderLayout(double width)
     {
         // Trên màn hình hẹp, đưa bộ lọc và nút làm mới xuống hàng dưới tiêu đề.
-        var narrow = width < 700;
+        var narrow = width < ResponsiveBreakpoints.DashboardHeaderNarrow;
         HeaderGrid.RowDefinitions.Clear();
         HeaderGrid.ColumnDefinitions.Clear();
 

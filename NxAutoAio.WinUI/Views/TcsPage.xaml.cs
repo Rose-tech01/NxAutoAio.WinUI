@@ -1,10 +1,10 @@
-using System;
 using System.Collections.ObjectModel;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using NxAutoAio.WinUI.Constants;
+using NxAutoAio.WinUI.Data;
 using NxAutoAio.WinUI.Helpers;
 using NxAutoAio.WinUI.Models;
-using System.Linq;
 
 namespace NxAutoAio.WinUI.Views;
 
@@ -14,15 +14,7 @@ namespace NxAutoAio.WinUI.Views;
 public sealed partial class TcsPage : Page
 {
     // Bộ dữ liệu mẫu để thử tìm kiếm, lọc trạng thái và chọn nhiều MAWB.
-    private readonly ObservableCollection<MawbModel> _allItems = new()
-    {
-        new() { Index = 1, Number = "738-12345670", HawbCount = 4, TcsStatus = "Đã thông quan", Fee = "850.000 đ", PrintStatus = "Sẵn sàng" },
-        new() { Index = 2, Number = "738-12345681", HawbCount = 8, TcsStatus = "Đang xử lý", Fee = "Chưa tra", PrintStatus = "Chờ in" },
-        new() { Index = 3, Number = "738-12345692", HawbCount = 2, TcsStatus = "Đã thông quan", Fee = "420.000 đ", PrintStatus = "Sẵn sàng" },
-        new() { Index = 4, Number = "738-12345703", HawbCount = 0, TcsStatus = "Cần kiểm tra", Fee = "Lỗi dữ liệu", PrintStatus = "Chưa in" },
-        new() { Index = 5, Number = "738-12345714", HawbCount = 6, TcsStatus = "Đang xử lý", Fee = "Chưa tra", PrintStatus = "Chờ in" },
-        new() { Index = 6, Number = "738-12345725", HawbCount = 3, TcsStatus = "Đã thông quan", Fee = "610.000 đ", PrintStatus = "Đã in" }
-    };
+    private readonly ObservableCollection<MawbModel> _allItems = SampleDataFactory.CreateTcsMawbs();
 
     public TcsPage()
     {
@@ -45,7 +37,7 @@ public sealed partial class TcsPage : Page
     private void UpdateFilterLayout(double width)
     {
         // Trên màn hình hẹp, chuyển ô tìm kiếm lên hàng riêng để giữ các bộ lọc dễ dùng.
-        var narrow = width < 680;
+        var narrow = width < ResponsiveBreakpoints.TcsFilterNarrow;
         FilterGrid.RowDefinitions.Clear();
         FilterGrid.ColumnDefinitions.Clear();
 
@@ -56,14 +48,9 @@ public sealed partial class TcsPage : Page
             FilterGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             FilterGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(120) });
 
-            Grid.SetRow(SearchBox, 0);
-            Grid.SetColumn(SearchBox, 0);
-            Grid.SetColumnSpan(SearchBox, 2);
-            Grid.SetRow(StatusFilter, 1);
-            Grid.SetColumn(StatusFilter, 0);
-            Grid.SetColumnSpan(StatusFilter, 1);
-            Grid.SetRow(SelectionStatus, 1);
-            Grid.SetColumn(SelectionStatus, 1);
+            GridLayoutHelper.SetPosition(SearchBox, 0, 0, 2);
+            GridLayoutHelper.SetPosition(StatusFilter, 1, 0);
+            GridLayoutHelper.SetPosition(SelectionStatus, 1, 1);
         }
         else
         {
@@ -72,21 +59,16 @@ public sealed partial class TcsPage : Page
             FilterGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(220) });
             FilterGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(120) });
 
-            Grid.SetRow(SearchBox, 0);
-            Grid.SetColumn(SearchBox, 0);
-            Grid.SetColumnSpan(SearchBox, 1);
-            Grid.SetRow(StatusFilter, 0);
-            Grid.SetColumn(StatusFilter, 1);
-            Grid.SetColumnSpan(StatusFilter, 1);
-            Grid.SetRow(SelectionStatus, 0);
-            Grid.SetColumn(SelectionStatus, 2);
+            GridLayoutHelper.SetPosition(SearchBox, 0, 0);
+            GridLayoutHelper.SetPosition(StatusFilter, 0, 1);
+            GridLayoutHelper.SetPosition(SelectionStatus, 0, 2);
         }
     }
 
     private void UpdateLayout(double width)
     {
         // Gom các nút thao tác thành nhiều hàng khi chiều rộng không đủ cho một thanh ngang.
-        var narrow = width < 760;
+        var narrow = width < ResponsiveBreakpoints.TcsToolbarNarrow;
         ToolbarGrid.RowDefinitions.Clear();
         ToolbarGrid.ColumnDefinitions.Clear();
 
@@ -101,9 +83,7 @@ public sealed partial class TcsPage : Page
             GridLayoutHelper.StretchButton(ClearanceButton, 0, 1);
             GridLayoutHelper.StretchButton(FeeButton, 1, 0);
             GridLayoutHelper.StretchButton(PrintButton, 1, 1);
-            Grid.SetRow(FileStatus, 2);
-            Grid.SetColumn(FileStatus, 0);
-            Grid.SetColumnSpan(FileStatus, 2);
+            GridLayoutHelper.SetPosition(FileStatus, 2, 0, 2);
         }
         else
         {
@@ -115,9 +95,7 @@ public sealed partial class TcsPage : Page
             GridLayoutHelper.StretchButton(ClearanceButton, 0, 1);
             GridLayoutHelper.StretchButton(FeeButton, 0, 2);
             GridLayoutHelper.StretchButton(PrintButton, 0, 3);
-            Grid.SetRow(FileStatus, 0);
-            Grid.SetColumn(FileStatus, 4);
-            Grid.SetColumnSpan(FileStatus, 1);
+            GridLayoutHelper.SetPosition(FileStatus, 0, 4);
         }
     }
 
@@ -146,10 +124,8 @@ public sealed partial class TcsPage : Page
 
         // Kết hợp tìm số MAWB với trạng thái TCS; danh sách kết quả không thay đổi dữ liệu gốc.
         var query = SearchBox.Text.Trim();
-        var status = (StatusFilter.SelectedItem as ComboBoxItem)?.Tag?.ToString() ?? "All";
-        var filtered = _allItems.Where(item =>
-            (string.IsNullOrWhiteSpace(query) || item.Number.Contains(query, StringComparison.OrdinalIgnoreCase)) &&
-            (status == "All" || item.TcsStatus == status));
+        var status = (StatusFilter.SelectedItem as ComboBoxItem)?.Tag?.ToString() ?? StatusValues.All;
+        var filtered = FilterHelper.FilterMawbs(_allItems, query, status);
 
         MawbList.ItemsSource = new ObservableCollection<MawbModel>(filtered);
         SelectionStatus.Text = $"{MawbList.Items.Count} bản ghi";

@@ -36,6 +36,13 @@ internal static class GridLayoutHelper
         Grid.SetColumnSpan(element, 1);
     }
 
+    public static void SetPosition(FrameworkElement element, int row, int column, int columnSpan)
+    {
+        Grid.SetRow(element, row);
+        Grid.SetColumn(element, column);
+        Grid.SetColumnSpan(element, columnSpan);
+    }
+
     public static void StretchButton(Button button, int row, int column)
     {
         SetPosition(button, row, column);
