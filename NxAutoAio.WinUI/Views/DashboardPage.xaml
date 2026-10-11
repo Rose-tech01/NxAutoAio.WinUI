@@ -4,12 +4,18 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Grid x:Name="PageRoot" Padding="32" SizeChanged="PageRoot_SizeChanged">
-            <TextBlock Text="Dashboard tổng quan" Style="{StaticResource PageTitleStyle}" />
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Text="Dashboard tổng quan" Style="{StaticResource PageTitleStyle}" />
             <TextBlock Text="Theo dõi nhanh tình trạng xử lý hàng hóa và các dịch vụ logistics."
+                       Grid.Row="1"
                        Opacity="0.68"
                        Margin="0,0,0,24" />
 
-            <Grid x:Name="DashboardGrid" ColumnSpacing="12" RowSpacing="12">
+            <Grid x:Name="DashboardGrid" Grid.Row="2" ColumnSpacing="12" RowSpacing="12">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />

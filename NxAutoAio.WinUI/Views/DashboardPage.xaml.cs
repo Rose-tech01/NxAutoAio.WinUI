@@ -16,8 +16,8 @@ public sealed partial class DashboardPage : Page
 
     private void UpdateLayout(double width)
     {
-        var compact = width < 760;
-        var narrow = width < 520;
+        var compact = width < 980;
+        var narrow = width < 620;
         var columnCount = narrow ? 1 : compact ? 2 : 4;
 
         DashboardGrid.ColumnDefinitions.Clear();

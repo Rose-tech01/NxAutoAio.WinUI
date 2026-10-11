@@ -20,11 +20,31 @@ public sealed partial class MainWindow : Window
     private void RootGrid_Loaded(object sender, RoutedEventArgs e)
     {
         SyncThemeState();
+        UpdateThemeButtonLayout();
     }
 
     private void RootGrid_ActualThemeChanged(FrameworkElement sender, object args)
     {
         SyncThemeState();
+    }
+
+    private void MainNavigation_DisplayModeChanged(
+        NavigationView sender,
+        NavigationViewDisplayModeChangedEventArgs args)
+    {
+        UpdateThemeButtonLayout();
+    }
+
+    private void UpdateThemeButtonLayout()
+    {
+        var compact = MainNavigation.DisplayMode != NavigationViewDisplayMode.Expanded;
+        ThemeLabel.Visibility = compact ? Visibility.Collapsed : Visibility.Visible;
+        ThemeButton.HorizontalAlignment = compact
+            ? HorizontalAlignment.Center
+            : HorizontalAlignment.Stretch;
+        ThemeButton.Width = compact ? 44 : double.NaN;
+        ThemeButton.Margin = compact ? new Thickness(8, 8, 8, 8) : new Thickness(12, 8, 12, 8);
+        ThemeButton.Padding = compact ? new Thickness(0, 8, 0, 8) : new Thickness(12, 8, 12, 8);
     }
 
     private void SyncThemeState()

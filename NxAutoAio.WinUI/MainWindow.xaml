@@ -16,6 +16,7 @@
             IsSettingsVisible="False"
             IsPaneToggleButtonVisible="True"
             PaneDisplayMode="Left"
+            DisplayModeChanged="MainNavigation_DisplayModeChanged"
             SelectionChanged="MainNavigation_SelectionChanged">
             <controls:NavigationView.PaneHeader>
                 <StackPanel Orientation="Horizontal" Spacing="12" Margin="12,4,12,16">
