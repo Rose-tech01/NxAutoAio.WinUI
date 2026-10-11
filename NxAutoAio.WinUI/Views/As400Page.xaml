@@ -10,10 +10,10 @@
             <TextBlock Text="Dữ liệu AS400" Style="{StaticResource PageTitleStyle}" />
             <TextBlock Text="Quản lý danh sách MAWB và HAWB" Opacity="0.68" />
         </StackPanel>
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,24,0,16">
-            <Button Content="Lấy MAWB từ AS400" Style="{StaticResource ToolbarButtonStyle}" />
-            <Button Content="Lấy HAWB đã chọn" Style="{StaticResource ToolbarButtonStyle}" />
-            <Button Content="Làm mới" Style="{StaticResource ToolbarButtonStyle}" />
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,24,0,16" Spacing="8">
+            <Button Content="Lấy MAWB từ AS400" Style="{StaticResource ToolbarButtonStyle}" Click="LoadMawb_Click" />
+            <Button Content="Lấy HAWB đã chọn" Style="{StaticResource ToolbarButtonStyle}" Click="LoadHawb_Click" />
+            <Button Content="Làm mới" Style="{StaticResource ToolbarButtonStyle}" Click="Refresh_Click" />
         </StackPanel>
         <Grid Grid.Row="2" RowSpacing="16">
             <Grid.RowDefinitions><RowDefinition Height="*" /><RowDefinition Height="*" /></Grid.RowDefinitions>
@@ -22,21 +22,55 @@
                     <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="*" /></Grid.RowDefinitions>
                     <Grid Padding="16">
                         <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="300" /></Grid.ColumnDefinitions>
-                        <TextBlock Text="Danh sách MAWB  (0 dòng)" Style="{StaticResource SectionTitleStyle}" />
-                        <TextBox Grid.Column="1" PlaceholderText="Tìm kiếm MAWB..." />
+                        <TextBlock x:Name="MawbCountText" Text="Danh sách MAWB" Style="{StaticResource SectionTitleStyle}" />
+                        <TextBox x:Name="MawbSearchBox" Grid.Column="1" PlaceholderText="Tìm kiếm MAWB..."
+                                 TextChanged="MawbSearchBox_TextChanged" />
                     </Grid>
-                    <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="8">
+                    <ListView x:Name="MawbList" Grid.Row="1" SelectionChanged="MawbList_SelectionChanged"
+                              SelectionMode="Single">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Padding="16,10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="180" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="100" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding Number}" />
+                                    <TextBlock Text="{Binding Destination}" Grid.Column="1" Opacity="0.72" />
+                                    <TextBlock Text="{Binding Packages}" Grid.Column="2" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <StackPanel x:Name="MawbEmptyState" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="8" Visibility="Collapsed">
                         <FontIcon Glyph="&#xE8A5;" FontSize="28" Opacity="0.55" />
                         <TextBlock Text="Chưa có dữ liệu MAWB" FontSize="16" />
                     </StackPanel>
                 </Grid>
             </Border>
             <Border Grid.Row="1" Style="{StaticResource CardStyle}" Padding="0">
-                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="8">
-                    <FontIcon Glyph="&#xE8A5;" FontSize="28" Opacity="0.55" />
-                    <TextBlock Text="Chọn một MAWB để xem HAWB" FontSize="16" />
-                    <TextBlock Text="Danh sách HAWB sẽ hiển thị tại đây" Opacity="0.65" />
-                </StackPanel>
+                <Grid>
+                    <StackPanel x:Name="HawbEmptyState" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="8">
+                        <FontIcon Glyph="&#xE8A5;" FontSize="28" Opacity="0.55" />
+                        <TextBlock Text="Chọn một MAWB để xem HAWB" FontSize="16" />
+                        <TextBlock Text="Danh sách HAWB sẽ hiển thị tại đây" Opacity="0.65" />
+                    </StackPanel>
+                    <ListView x:Name="HawbList" Visibility="Collapsed">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Padding="16,10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="180" /><ColumnDefinition Width="*" /><ColumnDefinition Width="120" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding Number}" />
+                                    <TextBlock Text="{Binding Consignee}" Grid.Column="1" Opacity="0.72" />
+                                    <TextBlock Text="{Binding Packages}" Grid.Column="2" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
             </Border>
         </Grid>
     </Grid>

@@ -6,20 +6,36 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <StackPanel>
             <TextBlock Text="Dịch vụ TCS" Style="{StaticResource PageTitleStyle}" />
             <TextBlock Text="Tra cứu và quản lý dữ liệu tờ cần" Opacity="0.68" />
         </StackPanel>
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,24,0,16">
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,24,0,12" Spacing="8">
             <Button Content="Nạp File List" Style="{StaticResource ToolbarButtonStyle}" Click="Load_Click" />
-            <Button Content="Tra Thông Quan" Style="{StaticResource ToolbarButtonStyle}" />
-            <Button Content="Tra Phí Lao Vụ" Style="{StaticResource ToolbarButtonStyle}" />
-            <Button Content="In Tờ Cần" Style="{StaticResource ToolbarButtonStyle}" />
+            <Button Content="Tra Thông Quan" Style="{StaticResource ToolbarButtonStyle}" Click="Action_Click" />
+            <Button Content="Tra Phí Lao Vụ" Style="{StaticResource ToolbarButtonStyle}" Click="Action_Click" />
+            <Button Content="In Tờ Cần" Style="{StaticResource ToolbarButtonStyle}" Click="Action_Click" />
             <TextBlock x:Name="FileStatus" Text="Dữ liệu mẫu" VerticalAlignment="Center" Opacity="0.7" />
         </StackPanel>
-        <Border Grid.Row="2" Style="{StaticResource CardStyle}" Padding="0">
+        <Grid Grid.Row="2" Margin="0,0,0,12" ColumnSpacing="12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="220" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBox x:Name="SearchBox" PlaceholderText="Tìm kiếm MAWB..." TextChanged="SearchBox_TextChanged" />
+            <ComboBox x:Name="StatusFilter" Grid.Column="1" SelectedIndex="0" SelectionChanged="StatusFilter_SelectionChanged">
+                <ComboBoxItem Content="Tất cả trạng thái" Tag="All" />
+                <ComboBoxItem Content="Đã thông quan" Tag="Đã thông quan" />
+                <ComboBoxItem Content="Đang xử lý" Tag="Đang xử lý" />
+                <ComboBoxItem Content="Cần kiểm tra" Tag="Cần kiểm tra" />
+            </ComboBox>
+            <TextBlock x:Name="SelectionStatus" Grid.Column="2" VerticalAlignment="Center" Opacity="0.7" />
+        </Grid>
+        <Border Grid.Row="3" Style="{StaticResource CardStyle}" Padding="0">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -28,26 +44,31 @@
                 <Grid Background="{StaticResource SubtleCardBrush}" Padding="16">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="60" /><ColumnDefinition Width="180" />
-                        <ColumnDefinition Width="*" /><ColumnDefinition Width="150" /><ColumnDefinition Width="150" />
+                        <ColumnDefinition Width="100" /><ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="140" /><ColumnDefinition Width="140" />
                     </Grid.ColumnDefinitions>
                     <TextBlock Text="STT" /><TextBlock Text="Số hiệu MAWB" Grid.Column="1" />
-                    <TextBlock Text="Trạng thái hệ thống TCS" Grid.Column="2" />
-                    <TextBlock Text="Phí lao vụ" Grid.Column="3" /><TextBlock Text="Trạng thái in" Grid.Column="4" />
+                    <TextBlock Text="HAWB" Grid.Column="2" />
+                    <TextBlock Text="Trạng thái hệ thống TCS" Grid.Column="3" />
+                    <TextBlock Text="Phí lao vụ" Grid.Column="4" /><TextBlock Text="Trạng thái in" Grid.Column="5" />
                 </Grid>
-                <ListView x:Name="MawbList" Grid.Row="1" SelectionMode="None"
+                <ListView x:Name="MawbList" Grid.Row="1" SelectionMode="Multiple"
+                          SelectionChanged="MawbList_SelectionChanged"
                           IsItemClickEnabled="False">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Grid Padding="16,10" MinHeight="44">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="60" /><ColumnDefinition Width="180" />
-                                    <ColumnDefinition Width="*" /><ColumnDefinition Width="150" /><ColumnDefinition Width="150" />
+                                    <ColumnDefinition Width="100" /><ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="140" /><ColumnDefinition Width="140" />
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Text="{Binding Index}" />
                                 <TextBlock Text="{Binding Number}" Grid.Column="1" />
-                                <TextBlock Text="{Binding TcsStatus}" Grid.Column="2" />
-                                <TextBlock Text="Chưa tra" Grid.Column="3" Opacity="0.7" />
-                                <TextBlock Text="{Binding PrintStatus}" Grid.Column="4" Opacity="0.8" />
+                                <TextBlock Text="{Binding HawbCount}" Grid.Column="2" />
+                                <TextBlock Text="{Binding TcsStatus}" Grid.Column="3" />
+                                <TextBlock Text="{Binding Fee}" Grid.Column="4" Opacity="0.8" />
+                                <TextBlock Text="{Binding PrintStatus}" Grid.Column="5" Opacity="0.8" />
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
