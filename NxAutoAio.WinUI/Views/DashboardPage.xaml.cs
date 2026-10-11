@@ -18,6 +18,7 @@ public sealed partial class DashboardPage : Page
     {
         var narrow = width < 900;
         var compact = width < 1250;
+        UpdateHeaderLayout(width);
 
         SetStatColumns(narrow ? 2 : compact ? 3 : 6);
         SetGridLayout(WorkGrid, narrow ? 1 : 2, narrow ? 2 : 1);
@@ -38,6 +39,38 @@ public sealed partial class DashboardPage : Page
         };
         for (var i = 0; i < statusCards.Length; i++)
             SetGridPosition(statusCards[i], narrow ? i : i / (compact ? 2 : 4), narrow ? 0 : i % (compact ? 2 : 4));
+    }
+
+    private void UpdateHeaderLayout(double width)
+    {
+        var narrow = width < 700;
+        HeaderGrid.RowDefinitions.Clear();
+        HeaderGrid.ColumnDefinitions.Clear();
+
+        if (narrow)
+        {
+            HeaderGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            HeaderGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            HeaderGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            Grid.SetRow(HeaderActions, 1);
+            Grid.SetColumn(HeaderActions, 0);
+            Grid.SetColumnSpan(HeaderActions, 1);
+            HeaderActions.HorizontalAlignment = HorizontalAlignment.Stretch;
+            HeaderActions.ColumnDefinitions[0].Width = new GridLength(1, GridUnitType.Star);
+            HeaderActions.ColumnDefinitions[1].Width = GridLength.Auto;
+        }
+        else
+        {
+            HeaderGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            HeaderGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            HeaderGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+            Grid.SetRow(HeaderActions, 0);
+            Grid.SetColumn(HeaderActions, 1);
+            Grid.SetColumnSpan(HeaderActions, 1);
+            HeaderActions.HorizontalAlignment = HorizontalAlignment.Right;
+            HeaderActions.ColumnDefinitions[0].Width = new GridLength(150);
+            HeaderActions.ColumnDefinitions[1].Width = GridLength.Auto;
+        }
     }
 
     private void SetStatColumns(int count)

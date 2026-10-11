@@ -13,26 +13,35 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0" ColumnSpacing="16">
+            <Grid x:Name="HeaderGrid" Grid.Row="0" ColumnSpacing="16" RowSpacing="8">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
                 <StackPanel>
                     <TextBlock Text="Dashboard tổng quan" Style="{StaticResource PageTitleStyle}" />
                     <TextBlock Text="Theo dõi tình trạng xử lý hàng hóa và dịch vụ logistics."
                                Opacity="0.68" />
                 </StackPanel>
-                <ComboBox x:Name="PeriodFilter" Grid.Column="1" Width="150" SelectedIndex="0"
-                          SelectionChanged="PeriodFilter_SelectionChanged">
-                    <ComboBoxItem Content="Hôm nay" />
-                    <ComboBoxItem Content="Hôm qua" />
-                    <ComboBoxItem Content="7 ngày gần nhất" />
-                    <ComboBoxItem Content="Tháng này" />
-                </ComboBox>
-                <Button Grid.Column="2" Content="Làm mới" Style="{StaticResource ToolbarButtonStyle}"
-                        Click="Refresh_Click" />
+                <Grid x:Name="HeaderActions" Grid.Column="1" ColumnSpacing="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <ComboBox x:Name="PeriodFilter" Width="150" SelectedIndex="0"
+                              SelectionChanged="PeriodFilter_SelectionChanged">
+                        <ComboBoxItem Content="Hôm nay" />
+                        <ComboBoxItem Content="Hôm qua" />
+                        <ComboBoxItem Content="7 ngày gần nhất" />
+                        <ComboBoxItem Content="Tháng này" />
+                    </ComboBox>
+                    <Button x:Name="RefreshButton" Grid.Column="1" Content="Làm mới"
+                            Style="{StaticResource ToolbarButtonStyle}"
+                            Click="Refresh_Click" />
+                </Grid>
             </Grid>
 
             <Grid Grid.Row="1" Margin="0,20,0,16" ColumnSpacing="12">
